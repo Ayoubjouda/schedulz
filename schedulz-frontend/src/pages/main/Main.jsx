@@ -7,11 +7,9 @@ const Main = () => {
   const [navshown, setNavshown] = useState(false);
 
   // products contain the owned courses
-  const products = useProductStore((state) => state.Products);
+  const { Products, Courses, setToken, setCurrentUser } = useProductStore((state) => state);
 
   // products contain all courses
-
-  const courses = useProductStore((state) => state.Courses);
 
   const navigate = useNavigate();
 
@@ -25,9 +23,7 @@ const Main = () => {
           >
             <div className="px-8">
               <div className="flex items-center w-full h-16">
-                <div className="ml-10 text-lg font-bold text-emerald-600">
-                  Schedulz
-                </div>
+                <div className="ml-10 text-lg font-bold text-emerald-600">Schedulz</div>
               </div>
               <ul className="mt-12">
                 <li className="flex items-center justify-between w-full mb-6 text-gray-300 cursor-pointer">
@@ -56,7 +52,7 @@ const Main = () => {
                     <span className="ml-2 text-sm">MarketPlace</span>
                   </button>
                   <div className="flex items-center justify-center px-3 py-1 text-xs text-gray-300 bg-gray-600 rounded">
-                    {courses.length}
+                    {Courses.length}
                   </div>
                 </li>
                 <li className="flex items-center justify-between w-full mb-6 text-gray-400 cursor-pointer hover:text-gray-300">
@@ -82,12 +78,15 @@ const Main = () => {
                     <span className="ml-2 text-sm">My Courses</span>
                   </button>
                   <div className="flex items-center justify-center px-3 py-1 text-xs text-gray-300 bg-gray-600 rounded">
-                    {products.length}
+                    {Products.length}
                   </div>
                 </li>
                 <li className="flex items-center justify-between w-full mb-6 text-gray-300 cursor-pointer hover:text-gray-500">
                   <button
-                    onClick={() => navigate("/")}
+                    onClick={() => {
+                      setToken(null);
+                      setCurrentUser(null);
+                    }}
                     className="flex items-center focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <svg
@@ -272,9 +271,7 @@ const Main = () => {
             </button>
             <div className="px-8">
               <div className="flex items-center w-full h-16">
-                <div className="ml-10 text-lg font-bold text-emerald-600">
-                  Schedulz
-                </div>
+                <div className="ml-10 text-lg font-bold text-emerald-600">Schedulz</div>
               </div>
               <ul className="mt-12">
                 <li className="flex items-center justify-between w-full mb-6 text-gray-300 cursor-pointer hover:text-gray-500">
@@ -303,7 +300,7 @@ const Main = () => {
                     <span className="ml-2 text-sm">MarketPlace</span>
                   </button>
                   <div className="flex items-center justify-center px-3 py-1 text-xs text-gray-300 bg-gray-600 rounded">
-                    {courses.length}
+                    {Courses.length}
                   </div>
                 </li>
                 <li className="flex items-center justify-between w-full mb-6 text-gray-400 cursor-pointer hover:text-gray-300">
@@ -329,7 +326,7 @@ const Main = () => {
                     <span className="ml-2 text-sm">My Courses</span>
                   </button>
                   <div className="flex items-center justify-center px-3 py-1 text-xs text-gray-300 bg-gray-600 rounded">
-                    {products.length}
+                    {Products.length}
                   </div>
                 </li>
                 <li className="flex items-center justify-between w-full mb-6 text-gray-300 cursor-pointer hover:text-gray-500">
@@ -459,7 +456,7 @@ const Main = () => {
             </div>
           </div>
 
-          <div className="container w-full h-full mx-auto md:w-full w-12/12 sm:ml-64 ">
+          <div className="container w-full h-full mx-auto overflow-x-hidden md:w-full w-12/12 sm:ml-64 ">
             <Outlet />
           </div>
         </div>

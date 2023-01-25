@@ -1,25 +1,18 @@
 import { PrismaService } from "./../prisma/prisma.service";
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthDto, SigninDto, GoogleSigninDto } from "src/dto";
 import * as argon from "argon2";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { JwtService } from "@nestjs/jwt";
 import { HttpService } from "@nestjs/axios";
-import { catchError } from "rxjs";
+
 @Injectable()
 export class AuthService {
-  constructor(
-    private prisma: PrismaService,
-    private jwt: JwtService,
-    private httpService: HttpService
-  ) {}
+  constructor(private prisma: PrismaService, private jwt: JwtService, private httpService: HttpService) {}
 
   async signup(dto: AuthDto) {
     try {
+      console.log(dto);
       const hash = await argon.hash(dto.password);
       const user = await this.prisma.user.create({
         data: {
@@ -29,15 +22,10 @@ export class AuthService {
           profilePicture: "http://141.145.200.78:3008/files/NoPicture.png",
         },
       });
-      return this.signToken(
-        user.id,
-        user.email,
-        user.username,
-        user.profilePicture
-      );
+      return this.signToken(user.id, user.email, user.username, user.profilePicture);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        throw new ForbiddenException("Credentials taken");
+        throw new ForbiddenException("Email or username already exists");
       }
     }
   }
@@ -53,12 +41,7 @@ export class AuthService {
 
     const pwMatches = await argon.verify(user.hash, dto.password);
     if (!pwMatches) throw new UnauthorizedException("Credentials incorrect");
-    return this.signToken(
-      user.id,
-      user.email,
-      user.username,
-      user.profilePicture
-    );
+    return this.signToken(user.id, user.email, user.username, user.profilePicture);
   }
 
   async googleSignin(dto: GoogleSigninDto) {
@@ -70,12 +53,9 @@ export class AuthService {
         Authorization: `Bearer ${dto.access_token}`,
       };
 
-      const googleApiResult = await this.httpService.axiosRef.get(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers: headersRequest,
-        }
-      );
+      const googleApiResult = await this.httpService.axiosRef.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+        headers: headersRequest,
+      });
 
       console.log(googleApiResult.data);
 
@@ -93,23 +73,13 @@ export class AuthService {
         },
       });
 
-      return this.signToken(
-        userData.id,
-        userData.email,
-        userData.name,
-        userData.profilePicture
-      );
+      return this.signToken(userData.id, userData.email, userData.name, userData.profilePicture);
     } catch (error) {
       throw Error(error);
     }
   }
 
-  async signToken(
-    userId: string,
-    userEmail: string,
-    usename: string,
-    profilePicture: string
-  ) {
+  async signToken(userId: string, userEmail: string, usename: string, profilePicture: string) {
     const payload = {
       sub: userId,
       userEmail,
