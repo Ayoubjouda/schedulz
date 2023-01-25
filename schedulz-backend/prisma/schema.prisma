@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String      @id @default(uuid())
+  createdAt   DateTime @default(now())
+  email       String   @unique
+  username    String   @unique
+  hash        String?
+  profilePicture String?
+  firstName   String?
+  lastName    String?
+  Admin         Boolean  @default(false)
+  Courses       Course[]
+}
+
+model Course {
+  id           Int         @id @default(autoincrement())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime    @default(now())
+  title  String
+  description  String
+  PostMedia    CourseMedia[]
+
+}
+
+model CourseMedia {
+  id       Int    @id @default(autoincrement())
+  courseId   Int
+  filePath String
+  course     Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+
+
+
+
+model Categories {
+  id            Int    @id @default(autoincrement())
+  categorieName String
+}
