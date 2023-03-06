@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prismaserver":"prisma studio",
     "prisma:dev:deploy": "npx prisma migrate dev",
     "deployserver": "npm run prisma:dev:deploy && npm run start ",
     "db:dev:rm": "docker compose rm db -s -f -v",

@@ -1,33 +1,55 @@
 import React, { useState } from "react";
 import useProductStore from "../../ZustandStore/store";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+import api from "../../api/api";
 import "./ProductComponent.scss";
 
-const ProductComponent = ({ product, index }) => {
+const ProductComponent = ({ product }) => {
   const [modalState, setModalState] = useState(false);
-  const { title, subTitle, price } = product;
+
   const navigate = useNavigate();
-  const myCourses = useProductStore((state) => state.Products);
+  const { userCourses, access_token, setUserCourses } = useProductStore((state) => state);
 
-  const addProduct = useProductStore((state) => state.addProduct);
+  const isProductPushased = userCourses?.find((el) => el.courseId === product.id);
+  const handleBuyCourse = async () => {
+    await api
+      .post(
+        "courses/buy",
+        { courseId: product.id },
+        {
+          headers: {
+            authorization: `Bearer ${access_token}`,
+            ContentType: "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => console.log(res));
 
-  const ProductIsAdded = myCourses.includes(product);
-
+    api
+      .get("courses/usercourses", {
+        headers: {
+          authorization: `Bearer ${access_token}`,
+          ContentType: "multipart/form-data",
+        },
+      })
+      .then((res) => setUserCourses(res.data.UserCourses))
+      .catch((err) => console.log(err));
+  };
+  const handleCourseClick = async () => {
+    if (access_token) {
+      if (!isProductPushased) {
+        setModalState(true);
+        await handleBuyCourse();
+      }
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <>
-      <div
-        className="flex flex-col items-center justify-center mt-10 "
-        onClick={() => (ProductIsAdded ? navigate(`/DashBoard/productdetails/${product.id}`) : null)}
-      >
-        <div
-          onClick={() => {
-            setModalState(true);
-            if (!ProductIsAdded) {
-              addProduct(product);
-            }
-          }}
-          className="flex flex-col duration-300 shadow-md cursor-pointer w-72 hover:-translate-y-1 "
-        >
+      <div className="flex flex-col items-center justify-center mt-10 ">
+        <div className="flex flex-col duration-300 shadow-md cursor-pointer w-72 hover:-translate-y-1 ">
           <div className="relative inline h-48 group">
             <img
               className="absolute object-cover w-full h-full rounded-t"
@@ -97,11 +119,35 @@ const ProductComponent = ({ product, index }) => {
 
               <div className="flex flex-row justify-end flex-auto"></div>
             </div>
+            {access_token && !isProductPushased ? (
+              <button
+                onClick={handleCourseClick}
+                class="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
+              >
+                Buy
+              </button>
+            ) : null}
+            {!access_token ? (
+              <button
+                onClick={() => navigate(`/login`)}
+                class="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
+              >
+                Buy
+              </button>
+            ) : null}
+            {access_token && isProductPushased ? (
+              <button
+                onClick={() => navigate(`/DashBoard/productdetails/${product.id}`)}
+                class="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
+              >
+                Go to Course
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
       {modalState ? (
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setModalState(false)}></div>
           <div className="flex items-center min-h-screen px-4 py-8">
             <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">

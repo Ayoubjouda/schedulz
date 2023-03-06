@@ -7,18 +7,22 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { MantineProvider } from "@mantine/core";
+
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <GoogleOAuthProvider clientId="933722326663-oheosig8bmjmhdc5npj1af7b05aknsa6.apps.googleusercontent.com">
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </GoogleOAuthProvider>
-      </ChakraProvider>
+      <MantineProvider withGlobalStyles withNormalizeCSS>
+        <ChakraProvider>
+          <GoogleOAuthProvider clientId="933722326663-oheosig8bmjmhdc5npj1af7b05aknsa6.apps.googleusercontent.com">
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </GoogleOAuthProvider>
+        </ChakraProvider>
+      </MantineProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

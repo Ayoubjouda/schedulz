@@ -78,7 +78,7 @@ export class AuthService {
       const googleApiResult = await this.httpService.axiosRef.get("https://www.googleapis.com/oauth2/v3/userinfo", {
         headers: headersRequest,
       });
-
+      console.log(googleApiResult);
       if (!googleApiResult) throw new UnauthorizedException();
       const userData = googleApiResult.data;
 

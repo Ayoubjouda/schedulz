@@ -1,17 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useProductStore from "../../ZustandStore/store";
+import { useQuery } from "react-query";
+
+import api from "../../api/api";
 // Profile Dropdown
 const ProfileDropDown = (props) => {
   const [state, setState] = useState(false);
   const profileRef = useRef();
-  const { Products, Courses, setToken, setCurrentUser, currentUser } = useProductStore((state) => state);
+  const { setToken, setCurrentUser, currentUser } = useProductStore((state) => state);
   const navigate = useNavigate();
-  const navigation = [
-    { title: "Dashboard", path: "javascript:void(0)" },
-    { title: "Settings", path: "javascript:void(0)" },
-    { title: "Log out", path: "javascript:void(0)" },
-  ];
 
   useEffect(() => {
     const handleDropDown = (e) => {
@@ -19,9 +17,8 @@ const ProfileDropDown = (props) => {
     };
     document.addEventListener("click", handleDropDown);
   }, []);
-
   return (
-    <div className={`relative ${props.class} z-40 bg-white `}>
+    <div className={`relative ${props.class} z-40 bg-white`}>
       <div className="flex items-center space-x-4 ">
         <div className="hidden lg:flex lg:flex-col lg:items-end">
           <span className="block font-bold uppercase">{currentUser.username}</span>
@@ -29,10 +26,10 @@ const ProfileDropDown = (props) => {
         </div>
         <button
           ref={profileRef}
-          className="h-12 rounded-full outline-none min-w-[50px] ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-emerald-600"
+          className="h-12 mt-5 rounded-full outline-none min-w-[50px] ring-offset-2 ring-gray-200 ring-2 lg:mt-0 lg:focus:ring-emerald-600"
           onClick={() => setState(!state)}
         >
-          <img src={currentUser.profilePicture} className="object-cover w-full h-full rounded-full" alt="" />
+          <img src={currentUser.profilePicture} className="object-cover w-full h-full rounded-full" alt="profile-pic" />
         </button>
         <div className="lg:hidden">
           <span className="block">{currentUser.username}</span>
@@ -75,15 +72,13 @@ const ProfileDropDown = (props) => {
 const Navbar = ({ currentUser }) => {
   const [menuState, setMenuState] = useState(false);
   const navigate = useNavigate();
-  // Replace javascript:void(0) path with your path
-  const navigation = [
-    { title: "MarketPlace", path: "/dashboard/marketplace" },
-    currentUser?.admin ? { title: "Admin", path: "/dashboard/admin" } : {},
-    ,
-  ];
+  const [categorieMenuState, setCategorieMenuState] = useState(false);
+  const { isLoading, error, data } = useQuery("categories", () => api.get("courses/getCategories"));
+
+  const navigation = [currentUser?.admin ? { title: "Admin", path: "/dashboard/admin" } : {}];
 
   return (
-    <nav className="bg-white border-b ">
+    <nav className="bg-white border-b " onClick={categorieMenuState ? () => setCategorieMenuState(false) : null}>
       <div className="z-50 flex items-center max-w-screen-xl px-4 py-3 mx-auto space-x-8 md:px-8">
         <div className="flex-none lg:flex-initial">
           <button onClick={() => navigate("/")} className="text-xl font-bold cursor-pointer text-emerald-700">
@@ -92,13 +87,13 @@ const Navbar = ({ currentUser }) => {
         </div>
         <div className="flex items-center justify-between flex-1">
           <div
-            className={`bg-white absolute z-10 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${
+            className={`bg-white absolute z-10 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none  ${
               menuState ? "" : "hidden"
             }`}
           >
             <ul className="z-10 mt-12 space-y-5 bg-white lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
               {navigation.map((item, idx) => (
-                <li key={idx} className="z-10 w-10 text-gray-600 bg-white hover:text-gray-900">
+                <li key={idx} className="z-10 text-gray-600 bg-white hover:text-gray-900">
                   <button
                     className="z-10 text-gray-600 bg-white hover:text-gray-900"
                     onClick={() => {
@@ -110,16 +105,77 @@ const Navbar = ({ currentUser }) => {
                   </button>
                 </li>
               ))}
+              <div className="flex ">
+                <div>
+                  <div className="relative dropend group">
+                    <button
+                      className="z-10 text-gray-600 bg-white hover:text-gray-900"
+                      onClick={() => setCategorieMenuState(!categorieMenuState)}
+                      type="button"
+                    >
+                      Courses
+                    </button>
+                    <ul
+                      className={`
+          dropdown-menu
+          min-w-max
+          absolute
+          bg-white
+          text-base
+          z-50
+          float-left
+          py-2
+          list-none
+          text-left
+          rounded-lg
+          shadow-lg
+          mt-1
+          ${categorieMenuState ? "block" : "hidden"}
+          m-0
+          bg-clip-padding
+          border-none
+        `}
+                      aria-labelledby="dropdownMenuButton1e"
+                    >
+                      {!isLoading && data?.data
+                        ? data.data.map((categorie, index) => (
+                            <li
+                              key={index}
+                              onClick={() => {
+                                navigate(`/dashboard/marketplace/${categorie.categorieName}`);
+                                setCategorieMenuState(!categorieMenuState);
+                              }}
+                            >
+                              <button className="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100">
+                                {categorie.categorieName}
+                              </button>
+                            </li>
+                          ))
+                        : null}
+                      <li
+                        onClick={() => {
+                          navigate(`/dashboard/marketplace/Other`);
+                          setCategorieMenuState(!categorieMenuState);
+                        }}
+                      >
+                        <button className="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100">
+                          Other
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </ul>
-            <ProfileDropDown class="mt-5 pt-5 border-t z-50 lg:hidden" setMenuState={() => setMenuState(!menuState)} />
+            <div className="block lg:hidden">
+              <ProfileDropDown setMenuState={() => setMenuState(!menuState)} />
+            </div>
           </div>
-          <div className="flex items-center justify-end flex-1 space-x-2 sm:space-x-6">
+          <div className="flex items-center justify-end flex-1 space-x-2 sm:space-x-6 ">
             <form className="flex items-center p-2 space-x-2 rounded-md"></form>
-            <ProfileDropDown
-              class="hidden lg:block"
-              nemuState={menuState}
-              setMenuState={() => setMenuState(!menuState)}
-            />
+            <div className="hidden lg:block">
+              <ProfileDropDown nemuState={menuState} setMenuState={() => setMenuState(!menuState)} />
+            </div>
             <button className="block text-gray-400 outline-none lg:hidden" onClick={() => setMenuState(!menuState)}>
               {menuState ? (
                 <svg

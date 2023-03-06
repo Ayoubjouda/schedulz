@@ -32,6 +32,7 @@ const GoogleSigninButton = () => {
   const navigate = useNavigate();
   const uselogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
+      console.log(codeResponse);
       api
         .post("auth/googlesignin", {
           access_token: codeResponse.access_token,
@@ -64,7 +65,7 @@ const GoogleSigninButton = () => {
   return (
     <button
       onClick={() => uselogin()}
-      className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-500 border border-gray-300 rounded-lg active:bg-blue-600 hover:bg-blue-600 focus:outline-none focus:shadow-outline-gray"
+      className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-gray-600 transition-colors duration-150 bg-white border border-gray-300 rounded-lg active:bg-blue-600 hover:bg-blue-50 focus:outline-none focus:shadow-outline-gray"
     >
       {loading ? (
         <Spinner />

@@ -28,6 +28,7 @@ function App() {
         <Route path="marketplace" element={<MaketplacePreview />} />
         <Route path="Dashboard" element={access_token ? <Main /> : <Navigate to="/login" />}>
           <Route path="marketplace" element={<MarketPlace />} />
+          <Route path="marketplace/:id" element={<MarketPlace />} />
           <Route path="mycourses" element={<MyCourses />} />
           <Route path="productdetails/:id" element={<ProductDetails />} />
           <Route path="admin" element={currentUser?.admin ? <Admin /> : <Navigate to="/Dashboard/marketplace" />} />

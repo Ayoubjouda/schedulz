@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import ProductComponent from "../../components/ProductComponent/ProductComponent";
-
+import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { slice } from "lodash";
 import { Spinner } from "@chakra-ui/react";
@@ -9,21 +9,24 @@ import api from "../../api/api";
 
 const MarketPlace = () => {
   // const { Courses } = useProductStore((state) => state);
+  const { id } = useParams();
   const { isLoading, data } = useQuery("courses", () => api.get("courses/getAllCourses"));
   const [isCompleted, setIsCompleted] = useState(false);
   const [search, setSearch] = useState("");
   const [index, setIndex] = useState(8);
-  const initialPosts = slice(data?.data, 0, index);
-  const filtredPosts = initialPosts.filter((el) => el.title.toLowerCase().includes(search));
-
-  const loadMore = () => {
-    setIndex(index + 8);
-
-    if (index >= data?.data.length) {
+  const filtredPosts = data?.data?.filter((el) => el.title.toLowerCase().includes(search));
+  const categoriePosts = filtredPosts?.filter((el) => el.categorie.includes(!!id ? id : ""));
+  const initialPosts = slice(categoriePosts, 0, index);
+  useEffect(() => {
+    if (index >= categoriePosts?.length) {
       setIsCompleted(true);
     } else {
       setIsCompleted(false);
     }
+  }, [initialPosts]);
+
+  const loadMore = () => {
+    setIndex(index + 8);
   };
   if (isLoading) {
     return (
@@ -36,7 +39,7 @@ const MarketPlace = () => {
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full ">
         <h2 class="m-6 text-2xl font-semibold text-gray-700 ">Marketplace</h2>
         <div class="pt-2 relative  text-gray-600 max-w-[200px] sm:max-w-none ">
           <input
@@ -64,12 +67,15 @@ const MarketPlace = () => {
         </div>
       </div>
 
-      <div className="justify-center pb-10 Courses-Section">
-        {filtredPosts?.map((product, index) => (
-          <ProductComponent product={product} index={index} />
+      <div className="justify-center pb-10 md:justify-start Courses-Section">
+        {initialPosts?.map((product, index) => (
+          <ProductComponent key={index} product={product} index={index} />
         ))}
       </div>
       <div class="text-center ">
+        {categoriePosts.length === 0 ? (
+          <div className="flex justify-center my-10 font-semibold"> No Courses Found.</div>
+        ) : null}
         {!isCompleted ? (
           <button
             onClick={loadMore}

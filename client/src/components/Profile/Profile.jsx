@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
 import { z } from "zod";
 import jwt_decode from "jwt-decode";
-
+import { Input } from "@chakra-ui/react";
 import _ from "lodash";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../../api/api";
@@ -139,10 +139,11 @@ const Profile = () => {
 
             <div className="sm:col-span-3">
               <label className="block text-sm font-medium text-blue-gray-900">First name</label>
-              <input
+              <Input
                 type="text"
                 name="first-name"
                 id="first-name"
+                style={{ backgroundColor: "white" }}
                 {...register("firstName")}
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
@@ -150,9 +151,10 @@ const Profile = () => {
 
             <div className="sm:col-span-3">
               <label className="block text-sm font-medium text-blue-gray-900">Last name</label>
-              <input
+              <Input
                 type="text"
                 name="last-name"
+                style={{ backgroundColor: "white" }}
                 id="last-name"
                 {...register("lastName")}
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
@@ -165,11 +167,12 @@ const Profile = () => {
                 <span className="inline-flex items-center px-3 border border-r-0 rounded-l-md border-blue-gray-300 bg-blue-gray-50 text-blue-gray-500 sm:text-sm">
                   schedulz.com/
                 </span>
-                <input
+                <Input
                   type="text"
                   name="username"
                   id="username"
                   disabled
+                  style={{ backgroundColor: "white" }}
                   value={currentUser.username}
                   className="flex-1 block w-full min-w-0 rounded-none rounded-r-md border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                 />
@@ -185,8 +188,8 @@ const Profile = () => {
                   alt=""
                 />
                 <div className="z-0 flex ml-4">
-                  <div className="relative z-0 flex items-center px-3 py-2 bg-white border rounded-md shadow-sm cursor-pointer border-blue-gray-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 hover:bg-blue-gray-50">
-                    <label className="relative z-0 text-sm font-medium pointer-events-none text-blue-gray-900">
+                  <div className="relative z-0 flex items-center w-20 px-3 py-2 bg-white border rounded-md shadow-sm cursor-pointer border-blue-gray-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 hover:bg-blue-gray-50">
+                    <label className="z-0 text-sm font-medium pointer-events-none text-blue-gray-900">
                       <span>Change</span>
                       <span className="sr-only"> user photo</span>
                     </label>
@@ -195,7 +198,7 @@ const Profile = () => {
                       name="user-photo"
                       type="file"
                       {...register("profilePicture")}
-                      className="absolute inset-0 z-0 w-full h-full border-gray-300 rounded-md opacity-0 cursor-pointer"
+                      className="absolute top-0 right-0 w-48 h-48 border-gray-300 rounded-md opacity-0 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -211,11 +214,12 @@ const Profile = () => {
 
             <div className="sm:col-span-3">
               <label className="block text-sm font-medium text-blue-gray-900">Current Passwond</label>
-              <input
+              <Input
                 type="password"
                 name="Current Passwond"
                 id="Current Passwond"
                 {...register("currentPassword")}
+                style={{ backgroundColor: "white" }}
                 placeholder="********"
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
@@ -224,12 +228,13 @@ const Profile = () => {
 
             <div className="sm:col-span-3">
               <label className="block text-sm font-medium text-blue-gray-900">New Passwond</label>
-              <input
+              <Input
                 type="password"
                 name="New Passwond"
                 id="New Passwond"
                 {...register("newPassword")}
                 placeholder="********"
+                style={{ backgroundColor: "white" }}
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
               {errors.newPassword && <p class="text-red-500 text-xs italic">Short Password</p>}
@@ -237,13 +242,14 @@ const Profile = () => {
 
             <div className="sm:col-span-3">
               <label className="block text-sm font-medium text-blue-gray-900">Confirm Passwond</label>
-              <input
+              <Input
                 type="password"
                 name="Confirm Passwond"
                 id="Confirm Passwond"
                 {...register("confirmPassword")}
+                style={{ backgroundColor: "white" }}
                 placeholder="********"
-                className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                className="block w-full mt-1 rounded-md shadow-sm text-blue-gray-900 focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
               />
               {errors.confirmPassword && <p class="text-red-500 text-xs italic">Passwords don't match.</p>}
             </div>
@@ -253,13 +259,13 @@ const Profile = () => {
             <button
               type="button"
               onClick={() => navigate("/dashboard/marketplace")}
-              className="px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-md shadow-sm text-blue-gray-900 hover:bg-blue-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-md shadow-sm text-blue-gray-900 hover:bg-blue-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               Save
             </button>

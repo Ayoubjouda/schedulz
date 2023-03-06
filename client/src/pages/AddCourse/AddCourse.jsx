@@ -1,53 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Textarea, NumberInput, NumberInputField } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import api from "../../api/api";
+import { MultiSelect } from "@mantine/core";
+import icsToJson from "ics-to-json";
 import { useQuery } from "react-query";
 import useProductStore from "../../ZustandStore/store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import { TimeRangeInput } from "@mantine/dates";
+
+import { Radio, RadioGroup, Stack, Button } from "@chakra-ui/react";
 const MAX_FILE_SIZE = 3000000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
-const ScheduleDays = [
-  {
-    id: 1,
-    day: "Monday",
-    selected: false,
-  },
-  {
-    id: 1,
-    day: "Tuesday",
-    selected: false,
-  },
-  {
-    id: 1,
-    day: "Wednesday",
-    selected: false,
-  },
-  {
-    id: 1,
-    day: "Thursday",
-    selected: false,
-  },
-  {
-    id: 1,
-    day: "Friday",
-    selected: false,
-  },
-  {
-    id: 1,
-    day: "Saturday",
-    selected: false,
-  },
-  {
-    id: 1,
-    day: "Sunday",
-    selected: false,
-  },
+const DaysData = [
+  { value: "MO", label: "Lundi" },
+  { value: "TU", label: "Mardi" },
+  { value: "WE", label: "Mercredi" },
+  { value: "TH", label: "Jeudi" },
+  { value: "FR", label: "Vendredi" },
+  { value: "SA", label: "Samedi" },
+  { value: "SU", label: "Diamnche" },
 ];
 
 const validateSchema = z.object({
@@ -74,18 +50,23 @@ const validateSchema = z.object({
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       ".jpg, .jpeg, .png and .webp files are accepted."
     ),
+  schedulefile: z.any(),
 });
 
 const SKILL_LEVEL = ["Beginner", "Intermediate", "Advanced", "Expert"];
 
 const AddCourse = () => {
+  const [daysValue, setValue] = useState([]);
+  const [timeValue, setTimeValue] = useState([]);
+  const [FileError, setFileError] = useState(false);
+
   const access_token = useProductStore((state) => state.access_token);
   const toast = useToast();
   const [scheduleType, setScheduleType] = React.useState("File");
   const formData = new FormData();
   const navigate = useNavigate();
   const { isLoading, error, data } = useQuery("categories", () => api.get("courses/getCategories"));
-  console.log(data?.data);
+  // console.log("days :", daysValue.length, "Time :", new Date(timeValue[0]));
   const {
     register,
     handleSubmit,
@@ -95,6 +76,42 @@ const AddCourse = () => {
     resolver: zodResolver(validateSchema),
   });
   const onSubmit = async (data) => {
+    if (
+      (data.scheduleFile?.length === 0 && scheduleType === "File") ||
+      (scheduleType === "Custom" && (daysValue.length === 0 || timeValue.length === 0))
+    ) {
+      setFileError(true);
+      return;
+    } else {
+      setFileError(false);
+    }
+
+    if (scheduleType === "Custom") {
+      const config = {
+        type: "Custom",
+        data: [
+          {
+            title: data.title,
+            start: new Date(timeValue[0]),
+            end: new Date(timeValue[1]),
+            recurrence: {
+              frequency: "WEEKLY",
+              weekdays: daysValue,
+            },
+          },
+        ],
+      };
+      formData.append("schedule", JSON.stringify(config));
+    } else {
+      const covertedFile = await convertIcsFileToJson(data.schedulefile[0]);
+      const config = {
+        type: "File",
+        data: covertedFile,
+      };
+      formData.append("schedule", JSON.stringify(config));
+    }
+    console.log("can send schedule");
+
     formData.append("data", JSON.stringify(data));
     formData.append("overview", data.overview[0]);
     formData.append("thumbnail", data.thumbnail[0]);
@@ -133,6 +150,13 @@ const AddCourse = () => {
           isClosable: true,
         })
       );
+  };
+
+  const convertIcsFileToJson = async (fileLocation) => {
+    const icsData = await fileLocation.text();
+    // Convert
+    const data = icsToJson(icsData);
+    return data;
   };
 
   return (
@@ -246,7 +270,7 @@ const AddCourse = () => {
                   {errors.price && <p class="text-red-500 text-xs italic">please enter a correct number</p>}
                 </div>
 
-                <div className="flex flex-col col-span-3 ">
+                <div className="flex flex-col col-span-6 sm:col-span-3 ">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Video thumbnail</label>
                   <div className="flex ">
                     <span className="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
@@ -264,7 +288,7 @@ const AddCourse = () => {
                   </div>
                   {errors.thumbnail && <p class="text-red-500 text-xs italic">{errors.thumbnail.message}</p>}
                 </div>
-                <div className="flex flex-col col-span-3 ">
+                <div className="flex flex-col col-span-6 sm:col-span-3 ">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Agenda OverView</label>
                   <div className="flex ">
                     <span className="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
@@ -281,7 +305,7 @@ const AddCourse = () => {
                   </div>
                   {errors.overview && <p class="text-red-500 text-xs italic">{errors.overview.message}</p>}
                 </div>
-                <div className="flex flex-col col-span-3 ">
+                <div className="flex flex-col col-span-6 sm:col-span-3 ">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Schedule</label>
                   <div className="flex flex-col ">
                     <RadioGroup onChange={setScheduleType} value={scheduleType}>
@@ -290,30 +314,31 @@ const AddCourse = () => {
                         <Radio value="Custom">Custom</Radio>
                       </Stack>
                     </RadioGroup>
-                    {scheduleType === "File" && (
+                    {scheduleType === "File" ? (
                       <Stack direction="column">
                         <input
                           type="file"
-                          accept="image/*"
+                          {...register("schedulefile")}
+                          accept=".ics"
                           className="px-3 py-2 mt-10 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        />{" "}
+                        />
+                        {FileError ? <p class="text-red-500 text-xs italic">Please enter a valid File.</p> : null}
+                      </Stack>
+                    ) : (
+                      <Stack className="mt-3" direction="column">
+                        <MultiSelect
+                          data={DaysData}
+                          value={daysValue}
+                          onChange={setValue}
+                          label="Week Days"
+                          placeholder="Schedule Days"
+                        />
+
+                        <TimeRangeInput label="Appointment time" value={timeValue} onChange={setTimeValue} />
+                        {FileError ? <p class="text-red-500 text-xs italic">Please enter all required Fields</p> : null}
                       </Stack>
                     )}
-
-                    {/* <span className="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
-                      <svg className="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                    </span>
-
-                    <input
-                      type="file"
-                      accept="image/*"
-                      {...register("thumbnail")}
-                      className="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    /> */}
                   </div>
-                  {/* {errors.thumbnail && <p class="text-red-500 text-xs italic">{errors.thumbnail.message}</p>} */}
                 </div>
               </div>
             </div>

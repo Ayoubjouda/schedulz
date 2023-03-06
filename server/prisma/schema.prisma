@@ -11,48 +11,53 @@ datasource db {
 }
 
 model User {
-  id          String      @id @default(uuid())
-  createdAt   DateTime @default(now())
-  email       String   @unique
-  username    String   @unique
-  hash        String?
+  id             String        @id @default(uuid())
+  createdAt      DateTime      @default(now())
+  email          String        @unique
+  username       String        @unique
+  hash           String?
   profilePicture String?
-  firstName   String?
-  lastName    String?
-  Admin         Boolean  @default(false)
-  Courses       Course[]
+  firstName      String?
+  lastName       String?
+  Admin          Boolean       @default(false)
+
+  UserCourses    UserCourses[]
 }
 
 model Course {
-  id           String         @id @default(uuid())
-  userId       String      
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime    @default(now())
-  title  String?
-  description  String?      @db.Text
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  title       String?
+  description String?  @db.Text
   instructor  String?
   skillLevel  String?
-  language  String?
-  
-  captions    Boolean?
-  categorie   String?
-  videoUrl    String?
-  price        Float?
-  PostMedia    CourseMedia[]
+  language    String?
+  captions  Boolean?
+  categorie String?
+  videoUrl  String?
+  price     Float?
+  schedule String?  @db.Text
+  PostMedia CourseMedia[]
+
+  UserCourses UserCourses[]
+}
+
+model UserCourses {
+  id       String @id @default(uuid())
+  user     User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade) 
+  userId   String
+  courseId String
 
 }
 
 model CourseMedia {
   id       Int    @id @default(autoincrement())
-  courseId   String
+  courseId String
   filePath String
-  type    String      
-  course     Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  type     String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
-
-
-
-
 
 model Categories {
   id            Int    @id @default(autoincrement())
