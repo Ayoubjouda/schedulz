@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MultiSelect } from "@mantine/core";
 import icsToJson from "ics-to-json";
 
-import { Input, Textarea, NumberInput, NumberInputField } from "@chakra-ui/react";
+import { Input, Textarea } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import api from "../../api/api";
 import { useQuery } from "react-query";
@@ -12,7 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
-import { Radio, RadioGroup, Stack, Button } from "@chakra-ui/react";
+import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import { TimeRangeInput } from "@mantine/dates";
 
 const DaysData = [

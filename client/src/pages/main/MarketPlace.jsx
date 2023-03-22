@@ -8,7 +8,6 @@ import { Spinner } from "@chakra-ui/react";
 import api from "../../api/api";
 
 const MarketPlace = () => {
-  // const { Courses } = useProductStore((state) => state);
   const { id } = useParams();
   const { isLoading, data } = useQuery("courses", () => api.get("courses/getAllCourses"));
   const [isCompleted, setIsCompleted] = useState(false);

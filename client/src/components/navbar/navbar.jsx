@@ -18,7 +18,7 @@ const ProfileDropDown = (props) => {
     document.addEventListener("click", handleDropDown);
   }, []);
   return (
-    <div className={`relative ${props.class} z-40 bg-white`}>
+    <div className={`relative ${props.class}  z-40 bg-white`}>
       <div className="flex items-center space-x-4 ">
         <div className="hidden lg:flex lg:flex-col lg:items-end">
           <span className="block font-bold uppercase">{currentUser.username}</span>
@@ -37,13 +37,13 @@ const ProfileDropDown = (props) => {
         </div>
       </div>
       <ul
-        className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${
+        className={`bg-white top-12 right-0 mt-5 space-y-5   lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${
           state ? "" : "lg:hidden"
         }`}
       >
-        <li>
+        <li className="w-full">
           <button
-            className="block w-full text-gray-600 lg:hover:bg-gray-50 lg:p-2.5 "
+            className="block w-full text-gray-600 text-start lg:hover:bg-gray-50 lg:p-2.5 "
             onClick={() => {
               navigate("profile");
               props.setMenuState();
@@ -52,9 +52,9 @@ const ProfileDropDown = (props) => {
             Profile
           </button>
         </li>
-        <li>
+        <li className="w-full">
           <button
-            className="block w-full text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
+            className="block w-full text-start text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
             onClick={() => {
               navigate("/");
               setCurrentUser(null);
@@ -117,6 +117,10 @@ const Navbar = ({ currentUser }) => {
                     </button>
                     <ul
                       className={`
+                      flex
+                      flex-col
+                      items-start
+                      
           dropdown-menu
           min-w-max
           absolute
@@ -145,8 +149,9 @@ const Navbar = ({ currentUser }) => {
                                 navigate(`/dashboard/marketplace/${categorie.categorieName}`);
                                 setCategorieMenuState(!categorieMenuState);
                               }}
+                              className="w-full"
                             >
-                              <button className="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100">
+                              <button className="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent text-start dropdown-item whitespace-nowrap hover:bg-gray-100">
                                 {categorie.categorieName}
                               </button>
                             </li>
@@ -157,8 +162,9 @@ const Navbar = ({ currentUser }) => {
                           navigate(`/dashboard/marketplace/Other`);
                           setCategorieMenuState(!categorieMenuState);
                         }}
+                        className="w-full"
                       >
-                        <button className="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100">
+                        <button className="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent text-start dropdown-item whitespace-nowrap hover:bg-gray-100">
                           Other
                         </button>
                       </li>

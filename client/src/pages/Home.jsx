@@ -88,7 +88,7 @@ const Home = () => {
               onClick={() => navigate("/marketplace")}
               className="text-sm text-gray-500 cursor-pointer md:text-lg hover:text-emerald-600"
             >
-              MarketPlace
+              Courses
             </div>
             <div
               onClick={() => navigate("/login")}
