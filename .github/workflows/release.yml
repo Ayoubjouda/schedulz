@@ -1,16 +1,17 @@
 name: Update VPS
 
 on:
-  workflow_run:
-    workflows: ["Publish Docker image"]
-    types:
-      - completed
+  push:
+    branches:
+      - master
 jobs:
   update_vps:
     runs-on: self-hosted
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Run update.sh on VPS
         run: |
-          cd ~/actions-runner/_work
-          ./update.sh
+          docker compose up -d
