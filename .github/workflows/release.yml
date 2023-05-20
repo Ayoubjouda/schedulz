@@ -1,0 +1,17 @@
+name: Update VPS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update_vps:
+    runs-on: self-hosted
+
+    needs: dockerpush
+
+    steps:
+      - name: Run update.sh on VPS
+        run: |
+          ./update.sh
