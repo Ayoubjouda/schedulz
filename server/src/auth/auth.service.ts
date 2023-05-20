@@ -13,7 +13,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwt: JwtService,
     private httpService: HttpService,
-    private config: ConfigService
+    private config: ConfigService 
   ) {}
 
   async signup(dto: AuthDto) {

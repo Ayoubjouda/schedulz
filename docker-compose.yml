@@ -1,0 +1,27 @@
+version: "3.1"
+
+networks:
+  mynetwork:
+    driver: bridge
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    networks:
+      - mynetwork
+
+  web:
+    build: .
+    restart: on-failure
+    depends_on:
+      - db
+    ports:
+      - 3333:3333
+    networks:
+      - mynetwork

@@ -17,10 +17,12 @@ import { UsersService } from "./users/users.service";
     PrismaModule,
     CoursesModule,
     { ...JwtModule.register({}), global: true },
-    MulterModule.register({ dest: "./uploads" }),
+    MulterModule.register({ dest: "../files" }),
+    ServeStaticModule.forRoot({ rootPath: join(__dirname, "..", "files"), serveRoot: "/files" }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", ""),
+      rootPath: join(__dirname, "..", "public"),
     }),
+
     UsersModule,
   ],
   providers: [UsersService],
