@@ -17,6 +17,7 @@ services:
       - mynetwork
 
   web:
+    container_name: schedulz
     build: .
     restart: on-failure
     depends_on:
