@@ -12,4 +12,5 @@ jobs:
     steps:
       - name: Run update.sh on VPS
         run: |
+          cd ~/actions-runner/_work
           ./update.sh
