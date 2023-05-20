@@ -18,4 +18,5 @@ jobs:
 
       - name: Run update.sh on VPS
         run: |
+          docker-compose build --nocache
           docker compose up -d
