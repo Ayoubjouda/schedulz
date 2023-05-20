@@ -1,6 +1,11 @@
 name: Update VPS
 
 on:
+    workflow_run:
+      workflows: ["Publish Docker image"]
+      branches: [master]
+      types:
+        - completed
   push:
     branches:
       - master
@@ -8,8 +13,6 @@ on:
 jobs:
   update_vps:
     runs-on: self-hosted
-
-    needs: dockerpush
 
     steps:
       - name: Checkout repository
