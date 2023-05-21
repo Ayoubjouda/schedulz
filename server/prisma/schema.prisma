@@ -43,12 +43,11 @@ model Course {
 }
 
 model UserCourses {
-  id       String @id @default(uuid())
   user     User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade) 
   userId   String
   courseId String
-
+  @@id([userId, courseId])
 }
 
 model CourseMedia {

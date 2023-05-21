@@ -1,5 +1,5 @@
 {
-  "name": "prototype",
+  "name": "schedulz-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,7 +17,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.3",
-    "compressorjs": "^1.1.1",
     "datebook": "^8.0.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",

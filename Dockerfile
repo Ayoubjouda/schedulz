@@ -1,7 +1,7 @@
 FROM node:18-slim
 RUN apt-get update
 RUN apt-get install -y openssl
-
+RUN npm i -g pnpm    
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -13,16 +13,14 @@ COPY client/package*.json ./client/
 
 
 # Install dependencies for server and client
-RUN npm run install
+RUN pnpm run install
 # Copy the server and client directories
 COPY server/ ./server
 COPY client/ ./client
 
-RUN npm run prismagenerate
 
-# Build the client
-RUN npm run build --prefix client
-RUN npm run build --prefix server
+# Build the client and the server
+RUN pnpm run build 
 
 
 ENV PORT=3333
@@ -31,4 +29,4 @@ ENV PORT=3333
 EXPOSE 3333
 
 # Set the command to start both server and client
-CMD ["npm", "run", "deployserver"]
+CMD ["pnpm", "run", "start:prod"]
