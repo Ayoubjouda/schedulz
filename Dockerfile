@@ -1,6 +1,5 @@
-FROM node:18-slim
-RUN apt-get update
-RUN apt-get install -y openssl
+FROM node:18-alpine
+
 RUN npm i -g pnpm    
 # Set the working directory inside the container
 WORKDIR /app
