@@ -1,13 +1,23 @@
 import { ConfigService } from "@nestjs/config";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { ForbiddenException, Injectable, UnauthorizedException, HttpException, HttpStatus } from "@nestjs/common";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+  HttpException,
+  HttpStatus,
+} from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { JwtService } from "@nestjs/jwt";
 import * as argon from "argon2";
 import * as fs from "fs";
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwt: JwtService,
+    private config: ConfigService
+  ) {}
   async EditUser(files: Array<Express.Multer.File>, data, user) {
     const userData = JSON.parse(data.data);
 
@@ -22,7 +32,8 @@ export class UsersService {
     try {
       let hash = null;
       let pwdMatch = null;
-      if (!!userData?.currentPassword) pwdMatch = await argon.verify(userCheck.hash, userData?.currentPassword);
+      if (!!userData?.currentPassword)
+        pwdMatch = await argon.verify(userCheck.hash, userData?.currentPassword);
 
       if (!!userData?.newPassword && pwdMatch) {
         hash = await argon.hash(userData?.newPassword);

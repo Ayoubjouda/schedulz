@@ -5,7 +5,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import { HttpService } from "@nestjs/axios";
 import { AuthDto, SigninDto, GoogleSigninDto } from "src/dto";
 import * as argon from "argon2";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 @Injectable()
 export class AuthService {
@@ -13,7 +13,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwt: JwtService,
     private httpService: HttpService,
-    private config: ConfigService 
+    private config: ConfigService
   ) {}
 
   async signup(dto: AuthDto) {
@@ -75,9 +75,12 @@ export class AuthService {
         Authorization: `Bearer ${dto.access_token}`,
       };
 
-      const googleApiResult = await this.httpService.axiosRef.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: headersRequest,
-      });
+      const googleApiResult = await this.httpService.axiosRef.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        {
+          headers: headersRequest,
+        }
+      );
       console.log(googleApiResult);
       if (!googleApiResult) throw new UnauthorizedException();
       const userData = googleApiResult.data;

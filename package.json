@@ -11,7 +11,7 @@
     "client": "pnpm start --prefix client",
     "watch": "pnpm run server & pnpm run client",
     "test": "pnpm --prefix server test  && pnpm --prefix client test",
-    "build": "pnpm --prefix client run build && pnpm --prefix server run build ",
+    "build": "pnpm --prefix client run build && pnpm --prefix server run build",
     "start:prod": "pnpm --prefix server run start:prod "
   },
   "keywords": [],

@@ -6,7 +6,7 @@ import {
   HttpException,
 } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { PrismaClientValidationError } from "@prisma/client/runtime";
+import { PrismaClientValidationError } from "@prisma/client/runtime/library";
 import * as fs from "fs";
 
 @Injectable()
@@ -181,7 +181,8 @@ export class CoursesService {
         },
       });
       if (!userCheck.Admin) {
-        if (!course) throw new HttpException("You need to Purshase this Course First", HttpStatus.FORBIDDEN);
+        if (!course)
+          throw new HttpException("You need to Purshase this Course First", HttpStatus.FORBIDDEN);
       }
       return new HttpException(courseCheck, HttpStatus.OK);
     } catch (error) {
