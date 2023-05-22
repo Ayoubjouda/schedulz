@@ -38,7 +38,10 @@ const validateSchema = z
     profilePicture: z
       .any()
       .optional()
-      .refine((files) => files.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`) // this should be greater than or equals (>=) not less that or equals (<=)
+      .refine(
+        (files) => files.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE,
+        `Max file size is 5MB.`
+      ) // this should be greater than or equals (>=) not less that or equals (<=)
       .refine(
         (files) => files.length === 0 || ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
         ".jpg, .jpeg, .png and .webp files are accepted."
@@ -124,11 +127,14 @@ const Profile = () => {
   };
 
   return (
-    <div className="z-0 flex-1 xl:overflow-y-auto">
+    <div className="z-0 flex-1 ">
       <div className="max-w-3xl px-4 py-10 mx-auto sm:px-6 lg:py-12 lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-blue-gray-900">Account</h1>
 
-        <form className="mt-6 space-y-8 divide-y divide-y-blue-gray-200" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="mt-6 space-y-8 divide-y divide-y-blue-gray-200"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
             <div className="sm:col-span-6">
               <h2 className="text-xl font-medium text-blue-gray-900">Profile</h2>
@@ -209,11 +215,15 @@ const Profile = () => {
           <div className="grid grid-cols-1 pt-8 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
             <div className="sm:col-span-6">
               <h2 className="text-xl font-medium text-blue-gray-900">Security</h2>
-              <p className="mt-1 text-sm text-blue-gray-500">This information is private do not share it.</p>
+              <p className="mt-1 text-sm text-blue-gray-500">
+                This information is private do not share it.
+              </p>
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-blue-gray-900">Current Passwond</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                Current Passwond
+              </label>
               <Input
                 type="password"
                 name="Current Passwond"
@@ -241,7 +251,9 @@ const Profile = () => {
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-blue-gray-900">Confirm Passwond</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                Confirm Passwond
+              </label>
               <Input
                 type="password"
                 name="Confirm Passwond"
@@ -251,7 +263,9 @@ const Profile = () => {
                 placeholder="********"
                 className="block w-full mt-1 rounded-md shadow-sm text-blue-gray-900 focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
               />
-              {errors.confirmPassword && <p class="text-red-500 text-xs italic">Passwords don't match.</p>}
+              {errors.confirmPassword && (
+                <p class="text-red-500 text-xs italic">Passwords don't match.</p>
+              )}
             </div>
           </div>
 

@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import Faqst from "../components/FaqsCard/FaqsCard";
-import protoImage from "../assets/images/imageProto.jpeg";
+import { ShoppingCart, Heart } from "lucide-react";
 import { useToast } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
 import useProductStore from "../ZustandStore/store";
 import api from "../api/api";
-
+import { Input } from "../components/ui/input";
+import { MainNav } from "components/main-nav";
+import { UserNav } from "components/user-nav";
+import { Button } from "components/ui/button";
 const Home = () => {
   // Replace javascript:void(0) path with your path
   const footerNavs = [
@@ -78,10 +81,54 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <header>
-        <nav className="items-center h-auto max-w-screen-xl px-4 pt-5 mx-auto sm:px-8 md:space-x-6">
-          <div className="flex justify-between ">
-            <div onClick={() => navigate("/")} className="text-lg font-bold lg:ml-10 text-emerald-600">
+      {/* <header>
+        <nav className="items-center h-auto px-4 pt-5 mx-auto sm:px-8 md:space-x-6">
+          <div className="border-b">
+            <div className="flex items-center h-16 px-4">
+              <MainNav className="mx-6" />
+              <div className="flex items-center ml-auto space-x-4">
+                <div>
+                  <Input
+                    type="search"
+                    placeholder="Search for anything"
+                    className="h-9 md:w-[100px] lg:w-[300px]"
+                  />
+                </div>
+                <div className="flex items-center hidden ml-auto space-x-4">
+                  <div>
+                    <Button variant="ghost">
+                      <Heart className="w-4 h-4 " />
+                    </Button>
+                    <Button variant="ghost">
+                      <ShoppingCart className="w-4 h-4 " />
+                    </Button>
+                  </div>
+                  <UserNav />
+                </div>
+                <div className="space-x-4">
+                  <Button
+                    variant="ghost"
+                    className="font-semibold"
+                    onClick={() => navigate("/login")}
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    variant="default"
+                    className="font-semibold bg-emerald-600 hover:bg-emerald-700"
+                    onClick={() => navigate("/login")}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className="flex justify-between ">
+            <div
+              onClick={() => navigate("/")}
+              className="text-lg font-bold lg:ml-10 text-emerald-600"
+            >
               Schedulz
             </div>
             <div
@@ -96,20 +143,20 @@ const Home = () => {
             >
               Sign In
             </div>
-          </div>
+          </div> 
         </nav>
-      </header>
+      </header> */}
       <section className="relative max-w-screen-xl px-4 py-4 mx-auto mt-32 cta-sec sm:px-8 ">
         <div className="absolute top-0 left-0 w-full h-full bg-white opacity-40"></div>
-        <div className="relative z-10 items-center gap-5 lg:flex">
+        <div className="relative items-center gap-5 lg:flex">
           <div className="flex-1 max-w-lg py-5 sm:mx-auto sm:text-center lg:max-w-max lg:text-left">
             <h3 className="text-3xl font-semibold text-gray-800 md:text-4xl">
               We do the planning,You do the learning. {""}
               <span className="text-emerald-500">Schedulz</span>
             </h3>
             <p className="mt-3 leading-relaxed text-gray-500">
-              Nam erat risus, sodales sit amet lobortis ut, finibus eget metus. Cras aliquam ante ut tortor posuere
-              feugiat. Duis sodales nisi id porta lacinia.
+              Nam erat risus, sodales sit amet lobortis ut, finibus eget metus. Cras aliquam ante ut
+              tortor posuere feugiat. Duis sodales nisi id porta lacinia.
             </p>
             <button
               className="inline-flex items-center px-4 py-2 mt-5 font-medium text-green-500 rounded-full bg-indigo-50"
@@ -123,16 +170,21 @@ const Home = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
             </button>
           </div>
           <div className="flex-1 mx-auto mt-5 sm:w-9/12 lg:mt-0 lg:w-auto">
-            <img src={protoImage} alt="" className="w-full rounded" />
+            <img src={""} alt="" className="w-full rounded" />
           </div>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .cta-sec {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23e5e7eb' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
           }
@@ -141,8 +193,11 @@ const Home = () => {
       <section className="max-w-screen-xl px-4 mx-auto mt-32 lg:px-8 ">
         <div className="text-center">
           <h1 className="text-3xl font-semibold text-gray-800">Available Courses</h1>
-          <p className="mt-3 text-gray-500">Blogs that are loved by the community. Updated every hour.</p>
+          <p className="mt-3 text-gray-500">
+            Blogs that are loved by the community. Updated every hour.
+          </p>
         </div>
+
         <div className="grid gap-2 mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((items, index) => (
             <article
@@ -150,10 +205,19 @@ const Home = () => {
               key={index}
             >
               <a href={items.href}>
-                <img src={items.img} loading="lazy" alt={items.title} className="w-full h-48 rounded-t-md" />
+                <img
+                  src={items.img}
+                  loading="lazy"
+                  alt={items.title}
+                  className="w-full h-48 rounded-t-md"
+                />
                 <div className="flex items-center pt-3 mt-2 ml-4 mr-2">
                   <div className="flex-none w-10 h-10 rounded-full">
-                    <img src={items.authorLogo} className="w-full h-full rounded-full" alt={items.authorName} />
+                    <img
+                      src={items.authorLogo}
+                      className="w-full h-full rounded-full"
+                      alt={items.authorName}
+                    />
                   </div>
                   <div className="ml-3">
                     <span className="block text-gray-900">{items.authorName}</span>
@@ -174,8 +238,8 @@ const Home = () => {
         <div className="max-w-lg sm:mx-auto sm:text-center">
           <div className="text-2xl font-bold text-emerald-600">schedulz</div>
           <p className="leading-relaxed mt-2 text-[15px]">
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-            galley of type and scrambled it to make a type specimen book.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+            unknown printer took a galley of type and scrambled it to make a type specimen book.
           </p>
         </div>
         <ul className="items-center justify-center mt-8 space-y-5 sm:flex sm:space-x-4 sm:space-y-0">
@@ -235,7 +299,7 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        <style jsx>{`
+        <style>{`
           .svg-icon path,
           .svg-icon polygon,
           .svg-icon rect {

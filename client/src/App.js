@@ -14,24 +14,32 @@ import Profile from "./components/Profile/Profile";
 import { Routes, Route, Navigate } from "react-router-dom";
 import useProductStore from "./ZustandStore/store";
 import "./App.css";
+import Navbar from "components/navbar/navbar";
 
 function App() {
-  const { access_token, currentUser } = useProductStore((state) => state);
+  const { currentUser } = useProductStore((state) => state);
 
   return (
     <div className="App">
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="register" element={<SignUp />} />
-        <Route path="login" element={access_token ? <Navigate to="/dashboard/marketplace" /> : <LoginComponent />} />
+        <Route
+          path="login"
+          element={currentUser ? <Navigate to="/dashboard/marketplace" /> : <LoginComponent />}
+        />
         <Route path="notfound" element={<ErrorPage />} />
         <Route path="marketplace" element={<MaketplacePreview />} />
-        <Route path="Dashboard" element={access_token ? <Main /> : <Navigate to="/login" />}>
+        <Route path="Dashboard" element={currentUser ? <Main /> : <Navigate to="/login" />}>
           <Route path="marketplace" element={<MarketPlace />} />
           <Route path="marketplace/:id" element={<MarketPlace />} />
           <Route path="mycourses" element={<MyCourses />} />
           <Route path="productdetails/:id" element={<ProductDetails />} />
-          <Route path="admin" element={currentUser?.admin ? <Admin /> : <Navigate to="/Dashboard/marketplace" />} />
+          <Route
+            path="admin"
+            element={currentUser?.admin ? <Admin /> : <Navigate to="/Dashboard/marketplace" />}
+          />
           <Route
             path="addcourse"
             element={currentUser?.admin ? <AddCourse /> : <Navigate to="/Dashboard/marketplace" />}

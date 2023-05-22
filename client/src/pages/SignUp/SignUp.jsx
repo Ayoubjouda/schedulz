@@ -82,13 +82,13 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center min-h-screen p-6 bg-gray-50 ">
-      <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl ">
-        <div className="flex flex-col overflow-y-auto md:flex-row">
-          <div className="h-32 md:h-auto md:w-1/2">
+    <div className="flex items-center h-auto bg-gray-50 ">
+      <div className="flex-1 h-full mx-auto overflow-hidden bg-white rounded-lg ">
+        <div className="flex flex-col md:flex-row">
+          <div className="h-32 md:h-[calc(100vh-65px)] md:w-1/2">
             <img
               aria-hidden="true"
-              className="object-cover w-full h-full dark:hidden"
+              className="object-cover w-full h-screen dark:hidden"
               alt="Office"
               src={
                 "https://images.pexels.com/photos/3585090/pexels-photo-3585090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -114,7 +114,9 @@ const SignUp = () => {
                     placeholder="username"
                     required
                   />
-                  {errors.username && <p class="text-red-500 text-xs italic">Please choose another username.</p>}
+                  {errors.username && (
+                    <p class="text-red-500 text-xs italic">Please choose another username.</p>
+                  )}
                 </label>
                 <label className="block text-sm ">
                   <span className="text-gray-700 dark:text-gray-400">Email</span>
@@ -125,7 +127,9 @@ const SignUp = () => {
                     placeholder="email"
                     required
                   />
-                  {errors.email && <p class="text-red-500 text-xs italic">Please enter a valid Email.</p>}
+                  {errors.email && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid Email.</p>
+                  )}
                 </label>
                 <label className="block mt-4 text-sm">
                   <span className="text-gray-700 dark:text-gray-400">Password</span>
@@ -136,7 +140,9 @@ const SignUp = () => {
                     {...register("password")}
                     required
                   />
-                  {errors.password && <p class="text-red-500 text-xs italic">Please choose a strong password.</p>}
+                  {errors.password && (
+                    <p class="text-red-500 text-xs italic">Please choose a strong password.</p>
+                  )}
                 </label>
                 <label className="block mt-4 text-sm">
                   <span className="text-gray-700 dark:text-gray-400">Confirm password</span>
@@ -147,7 +153,9 @@ const SignUp = () => {
                     placeholder="********"
                     required
                   />
-                  {errors.confirmPassword && <p class="text-red-500 text-xs italic">Passwords don't match.</p>}
+                  {errors.confirmPassword && (
+                    <p class="text-red-500 text-xs italic">Passwords don't match.</p>
+                  )}
                 </label>
 
                 <div className="flex mt-6 text-sm">
@@ -162,7 +170,9 @@ const SignUp = () => {
                     </span>
                   </label>
                 </div>
-                {errors.policy && <p class="text-red-500 text-xs italic">please agree to the terms</p>}
+                {errors.policy && (
+                  <p class="text-red-500 text-xs italic">please agree to the terms</p>
+                )}
                 <button
                   className="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg bg-emerald-600 active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
                   type="submit"

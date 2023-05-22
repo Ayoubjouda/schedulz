@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { MantineProvider } from "@mantine/core";
 
 const queryClient = new QueryClient();
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as Element);
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>

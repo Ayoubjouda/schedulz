@@ -8,21 +8,36 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import jwt_decode from "jwt-decode";
 import useProductStore from "../../ZustandStore/store";
-
+import { Button } from "components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "components/ui/form";
+import { Input } from "components/ui/input";
 const validateSchema = z.object({
-  email: z.string().min(4),
-  password: z.string().min(6),
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z
+    .string()
+    .regex(new RegExp(".*[A-Z].*"), "Must have at least one uppercase character")
+    .regex(new RegExp(".*[a-z].*"), "Must have at least one lowercase character")
+    .regex(new RegExp(".*\\d.*"), "Must have at least one number")
+    .regex(
+      new RegExp(".*[`~<>?,./!@#$%^&*()\\-_+=\"'|{}\\[\\];:\\\\].*"),
+      "Must have at least one special character"
+    )
+    .min(8, "Must be at least 8 characters in length"),
 });
 
 const LoginComponent = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
+  const form = useForm({
+    mode: "onBlur",
     resolver: zodResolver(validateSchema),
   });
 
@@ -72,13 +87,13 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="flex items-center min-h-screen p-6 bg-gray-50 ">
-      <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl ">
-        <div className="flex flex-col overflow-y-auto md:flex-row">
+    <div className="flex h-auto bg-gray-50 ">
+      <div className="flex-1 h-full mx-auto overflow-hidden bg-white ">
+        <div className="flex flex-col md:flex-row">
           <div className="h-32 md:h-auto md:w-1/2">
             <img
               aria-hidden="true"
-              className="object-cover w-full h-full dark:hidden"
+              className="object-cover w-full h-[calc(100vh-65px)] dark:hidden"
               src="https://images.pexels.com/photos/3585090/pexels-photo-3585090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
               alt="Office"
             />
@@ -89,9 +104,48 @@ const LoginComponent = () => {
               alt="Office"
             />
           </div>
+
           <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
-              <form onSubmit={handleSubmit(handleLogin)}>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-5">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter your email address" {...field} />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter your password" {...field} />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    className="w-full font-semibold bg-emerald-600 hover:bg-emerald-800"
+                    type="submit"
+                  >
+                    Login
+                  </Button>
+                </form>
+              </Form>
+              {/* <form onSubmit={handleSubmit(handleLogin)}>
                 <h1 className="mb-4 text-xl font-semibold text-gray-700">Login</h1>
                 <label className="block text-sm">
                   <span className="text-gray-700 dark:text-gray-400">Email</span>
@@ -103,7 +157,9 @@ const LoginComponent = () => {
                     placeholder="email"
                     required
                   />
-                  {errors.username && <p class="text-red-500 text-xs italic">Please enter a valid username.</p>}
+                  {errors.username && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid username.</p>
+                  )}
                 </label>
                 <label className="block mt-4 text-sm">
                   <span className="text-gray-700 dark:text-gray-400">Password</span>
@@ -114,7 +170,9 @@ const LoginComponent = () => {
                     {...register("password")}
                     required
                   />
-                  {errors.password && <p class="text-red-500 text-xs italic">Please enter a valid password.</p>}
+                  {errors.password && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid password.</p>
+                  )}
                 </label>
 
                 <button
@@ -124,7 +182,7 @@ const LoginComponent = () => {
                 >
                   {loading ? <Spinner /> : " Log In"}
                 </button>
-              </form>
+              </form> */}
               <hr className="my-8" />
 
               <GoogleSigninButton />

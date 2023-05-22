@@ -37,7 +37,7 @@ const MarketPlace = () => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-gray-50">
+    <div className="flex flex-col h-full ">
       <div className="flex items-center justify-between w-full ">
         <h2 class="m-6 text-2xl font-semibold text-gray-700 ">Marketplace</h2>
         <div class="pt-2 relative  text-gray-600 max-w-[200px] sm:max-w-none ">

@@ -8,8 +8,15 @@ const Main = () => {
   const [navshown, setNavshown] = useState(false);
 
   // products contain the owned courses
-  const { Products, userCourses, setToken, setCurrentUser, currentUser, access_token, setUserCourses } =
-    useProductStore((state) => state);
+  const {
+    Products,
+    userCourses,
+    setToken,
+    setCurrentUser,
+    currentUser,
+    access_token,
+    setUserCourses,
+  } = useProductStore((state) => state);
 
   // products contain all courses
 
@@ -27,9 +34,7 @@ const Main = () => {
   }, [access_token, setUserCourses]);
 
   return (
-    <div className="w-full h-full overflow-x-hidden bg-gray-50">
-      <Navbar currentUser={currentUser} />
-
+    <div className="w-full h-full bg-white">
       <div className="h-full max-w-screen-xl mx-auto ">
         <Outlet />
       </div>
