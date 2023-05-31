@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-const useProductStore = create(
+const useCoursesStore = create(
   persist(
     (set, get) => ({
       //access_token
@@ -39,4 +39,4 @@ const useProductStore = create(
     }
   )
 );
-export default useProductStore;
+export default useCoursesStore;

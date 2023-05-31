@@ -7,7 +7,7 @@ import { Input, Textarea } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import api from "../../api/api";
 import { useQuery } from "react-query";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
@@ -39,14 +39,20 @@ const validateSchema = z.object({
   price: z.number(),
   thumbnail: z
     .any()
-    .refine((files) => files?.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`) // this should be greater than or equals (>=) not less that or equals (<=)
+    .refine(
+      (files) => files?.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE,
+      `Max file size is 5MB.`
+    ) // this should be greater than or equals (>=) not less that or equals (<=)
     .refine(
       (files) => files?.length === 0 || ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       ".jpg, .jpeg, .png and .webp files are accepted."
     ),
   overview: z
     .any()
-    .refine((files) => files?.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 3MB.`) // this should be greater than or equals (>=) not less that or equals (<=)
+    .refine(
+      (files) => files?.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE,
+      `Max file size is 3MB.`
+    ) // this should be greater than or equals (>=) not less that or equals (<=)
     .refine(
       (files) => files?.length === 0 || ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       ".jpg, .jpeg, .png and .webp files are accepted."
@@ -55,7 +61,7 @@ const validateSchema = z.object({
 });
 
 const EditCourse = () => {
-  const access_token = useProductStore((state) => state.access_token);
+  const access_token = useCoursesStore((state) => state.access_token);
   const { id } = useParams();
   const [daysValue, setValue] = useState([]);
   const [timeValue, setTimeValue] = useState([]);
@@ -141,12 +147,18 @@ const EditCourse = () => {
     );
 
   if (error || courseError)
-    return <div className="flex items-center justify-center h-full"> Course Not found Please Purchase a course</div>;
+    return (
+      <div className="flex items-center justify-center h-full">
+        {" "}
+        Course Not found Please Purchase a course
+      </div>
+    );
 
   const onSubmit = async (data) => {
     if (
       scheduleType === "Custom" &&
-      ((daysValue.length === 0 && timeValue.length > 0) || (daysValue.length > 0 && timeValue.length === 0))
+      ((daysValue.length === 0 && timeValue.length > 0) ||
+        (daysValue.length > 0 && timeValue.length === 0))
     ) {
       setFileError(true);
       return;
@@ -260,22 +272,39 @@ const EditCourse = () => {
             <div className="px-4 py-5 bg-white sm:p-6">
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="first-name" className="block my-2 text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="first-name"
+                    className="block my-2 text-sm font-medium text-gray-700"
+                  >
                     Title
                   </label>
                   <Input placeholder="Title" {...register("title")} />
-                  {errors.title && <p class="text-red-500 text-xs italic">Please enter a valid Title.</p>}
+                  {errors.title && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid Title.</p>
+                  )}
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Instructor
                   </label>
-                  <Input placeholder="Instructor" {...register("instructor")} defaultValue={courseData?.title} />
-                  {errors.instructor && <p class="text-red-500 text-xs italic">Please enter a valid Name.</p>}
+                  <Input
+                    placeholder="Instructor"
+                    {...register("instructor")}
+                    defaultValue={courseData?.title}
+                  />
+                  {errors.instructor && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid Name.</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Skill Level
                   </label>
                   <select
@@ -290,18 +319,32 @@ const EditCourse = () => {
                     ))}
                   </select>
 
-                  {errors.skillLevel && <p class="text-red-500 text-xs italic">Please enter a valid SkillLevel.</p>}
+                  {errors.skillLevel && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid SkillLevel.</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     language
                   </label>
-                  <Input placeholder="language" {...register("language")} defaultValue={courseData?.title} />
-                  {errors.language && <p class="text-red-500 text-xs italic">this field can't be empty</p>}
+                  <Input
+                    placeholder="language"
+                    {...register("language")}
+                    defaultValue={courseData?.title}
+                  />
+                  {errors.language && (
+                    <p class="text-red-500 text-xs italic">this field can't be empty</p>
+                  )}
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Captions
                   </label>
                   <select
@@ -316,7 +359,10 @@ const EditCourse = () => {
                   </select>
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Categorie
                   </label>
                   <select
@@ -327,33 +373,50 @@ const EditCourse = () => {
                     {...register("categorie")}
                   >
                     {!isLoading && data?.data
-                      ? data.data.map((categorie, index) => <option key={index}>{categorie.categorieName}</option>)
+                      ? data.data.map((categorie, index) => (
+                          <option key={index}>{categorie.categorieName}</option>
+                        ))
                       : null}
                     <option> Other</option>
                   </select>
                 </div>
                 <div className="col-span-6 sm:col-span-6">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Description
                   </label>
 
                   <Textarea placeholder="Course Description" {...register("description")} />
-                  {errors.description && <p class="text-red-500 text-xs italic">this field can't be empty</p>}
+                  {errors.description && (
+                    <p class="text-red-500 text-xs italic">this field can't be empty</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Video Url
                   </label>
                   <Input placeholder="https://youtube.com" {...register("videoUrl")} />
-                  {errors.videoUrl && <p class="text-red-500 text-xs italic">this field can't be empty</p>}
+                  {errors.videoUrl && (
+                    <p class="text-red-500 text-xs italic">this field can't be empty</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Price
                   </label>
                   <Input {...register("price", { valueAsNumber: true })} type="number" />
 
-                  {errors.price && <p class="text-red-500 text-xs italic">please enter a correct number</p>}
+                  {errors.price && (
+                    <p class="text-red-500 text-xs italic">please enter a correct number</p>
+                  )}
                 </div>
 
                 <div className="flex flex-col col-span-6 sm:col-span-3">
@@ -374,7 +437,9 @@ const EditCourse = () => {
                       className="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     />
                   </div>
-                  {errors.thumbnail && <p class="text-red-500 text-xs italic">{errors.thumbnail.message}</p>}
+                  {errors.thumbnail && (
+                    <p class="text-red-500 text-xs italic">{errors.thumbnail.message}</p>
+                  )}
                 </div>
                 <div className="flex flex-col col-span-6 sm:col-span-3">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Agenda OverView</label>
@@ -393,7 +458,9 @@ const EditCourse = () => {
                       className="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     />
                   </div>
-                  {errors.overview && <p class="text-red-500 text-xs italic">{errors.overview.message}</p>}
+                  {errors.overview && (
+                    <p class="text-red-500 text-xs italic">{errors.overview.message}</p>
+                  )}
                 </div>
                 <div className="flex flex-col col-span-6 sm:col-span-3">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Schedule</label>
@@ -412,7 +479,9 @@ const EditCourse = () => {
                           accept=".ics"
                           className="px-3 py-2 mt-10 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         />
-                        {FileError ? <p class="text-red-500 text-xs italic">Please enter a valid File.</p> : null}
+                        {FileError ? (
+                          <p class="text-red-500 text-xs italic">Please enter a valid File.</p>
+                        ) : null}
                       </Stack>
                     ) : (
                       <Stack className="mt-3" direction="column">
@@ -424,8 +493,16 @@ const EditCourse = () => {
                           placeholder="Schedule Days"
                         />
 
-                        <TimeRangeInput label="Appointment time" value={timeValue} onChange={setTimeValue} />
-                        {FileError ? <p class="text-red-500 text-xs italic">Please enter all required Fields</p> : null}
+                        <TimeRangeInput
+                          label="Appointment time"
+                          value={timeValue}
+                          onChange={setTimeValue}
+                        />
+                        {FileError ? (
+                          <p class="text-red-500 text-xs italic">
+                            Please enter all required Fields
+                          </p>
+                        ) : null}
                       </Stack>
                     )}
                   </div>

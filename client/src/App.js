@@ -12,12 +12,12 @@ import EditCourse from "./pages/EditCourse/EditCourse";
 import ErrorPage from "./pages/main/error";
 import Profile from "./components/Profile/Profile";
 import { Routes, Route, Navigate } from "react-router-dom";
-import useProductStore from "./ZustandStore/store";
+import useCoursesStore from "./ZustandStore/store";
 import "./App.css";
 import Navbar from "components/navbar/navbar";
 
 function App() {
-  const { currentUser } = useProductStore((state) => state);
+  const { currentUser } = useCoursesStore((state) => state);
 
   return (
     <div className="App">

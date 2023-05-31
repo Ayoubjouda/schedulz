@@ -9,6 +9,7 @@ module.exports = {
       lib: path.resolve(__dirname, "lib"),
       pages: path.resolve(__dirname, "pages"),
       assets: path.resolve(__dirname, "assets"),
+      types: path.resolve(__dirname, "types"),
     },
   },
 };

@@ -5,7 +5,7 @@ import api from "../../api/api";
 import { MultiSelect } from "@mantine/core";
 import icsToJson from "ics-to-json";
 import { useQuery } from "react-query";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
@@ -60,7 +60,7 @@ const AddCourse = () => {
   const [timeValue, setTimeValue] = useState([]);
   const [FileError, setFileError] = useState(false);
 
-  const access_token = useProductStore((state) => state.access_token);
+  const access_token = useCoursesStore((state) => state.access_token);
   const toast = useToast();
   const [scheduleType, setScheduleType] = React.useState("File");
   const formData = new FormData();
@@ -175,22 +175,35 @@ const AddCourse = () => {
             <div className="px-4 py-5 bg-white sm:p-6">
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="first-name" className="block my-2 text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="first-name"
+                    className="block my-2 text-sm font-medium text-gray-700"
+                  >
                     Title
                   </label>
                   <Input placeholder="Title" {...register("title")} />
-                  {errors.title && <p class="text-red-500 text-xs italic">Please enter a valid Title.</p>}
+                  {errors.title && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid Title.</p>
+                  )}
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Instructor
                   </label>
                   <Input placeholder="Instructor" {...register("instructor")} />
-                  {errors.instructor && <p class="text-red-500 text-xs italic">Please enter a valid Name.</p>}
+                  {errors.instructor && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid Name.</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Skill Level
                   </label>
                   <select
@@ -205,18 +218,28 @@ const AddCourse = () => {
                     ))}
                   </select>
 
-                  {errors.skillLevel && <p class="text-red-500 text-xs italic">Please enter a valid SkillLevel.</p>}
+                  {errors.skillLevel && (
+                    <p class="text-red-500 text-xs italic">Please enter a valid SkillLevel.</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     language
                   </label>
                   <Input placeholder="language" {...register("language")} />
-                  {errors.language && <p class="text-red-500 text-xs italic">this field can't be empty</p>}
+                  {errors.language && (
+                    <p class="text-red-500 text-xs italic">this field can't be empty</p>
+                  )}
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Captions
                   </label>
                   <select
@@ -231,7 +254,10 @@ const AddCourse = () => {
                   </select>
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="last-name" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="last-name"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Categorie
                   </label>
                   <select
@@ -242,39 +268,60 @@ const AddCourse = () => {
                     {...register("categorie")}
                   >
                     {!isLoading && data?.data
-                      ? data.data.map((categorie, index) => <option key={index}>{categorie.categorieName}</option>)
+                      ? data.data.map((categorie, index) => (
+                          <option key={index}>{categorie.categorieName}</option>
+                        ))
                       : null}
                     <option> Other</option>
                   </select>
                 </div>
                 <div className="col-span-6 sm:col-span-6">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Description
                   </label>
                   <Textarea placeholder="Course Description" {...register("description")} />
-                  {errors.description && <p class="text-red-500 text-xs italic">this field can't be empty</p>}
+                  {errors.description && (
+                    <p class="text-red-500 text-xs italic">this field can't be empty</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Video Url
                   </label>
                   <Input placeholder="https://youtube.com" {...register("videoUrl")} />
-                  {errors.videoUrl && <p class="text-red-500 text-xs italic">this field can't be empty</p>}
+                  {errors.videoUrl && (
+                    <p class="text-red-500 text-xs italic">this field can't be empty</p>
+                  )}
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block my-2 text-sm font-medium text-gray-700 ">
+                  <label
+                    htmlFor="country"
+                    className="block my-2 text-sm font-medium text-gray-700 "
+                  >
                     Price
                   </label>
                   <Input {...register("price", { valueAsNumber: true })} type="number" />
 
-                  {errors.price && <p class="text-red-500 text-xs italic">please enter a correct number</p>}
+                  {errors.price && (
+                    <p class="text-red-500 text-xs italic">please enter a correct number</p>
+                  )}
                 </div>
 
                 <div className="flex flex-col col-span-6 sm:col-span-3 ">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Video thumbnail</label>
                   <div className="flex ">
                     <span className="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
-                      <svg className="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-full h-full text-gray-300"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                       </svg>
                     </span>
@@ -286,13 +333,19 @@ const AddCourse = () => {
                       className="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     />
                   </div>
-                  {errors.thumbnail && <p class="text-red-500 text-xs italic">{errors.thumbnail.message}</p>}
+                  {errors.thumbnail && (
+                    <p class="text-red-500 text-xs italic">{errors.thumbnail.message}</p>
+                  )}
                 </div>
                 <div className="flex flex-col col-span-6 sm:col-span-3 ">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Agenda OverView</label>
                   <div className="flex ">
                     <span className="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
-                      <svg className="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-full h-full text-gray-300"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                       </svg>
                     </span>
@@ -303,7 +356,9 @@ const AddCourse = () => {
                       className="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     />
                   </div>
-                  {errors.overview && <p class="text-red-500 text-xs italic">{errors.overview.message}</p>}
+                  {errors.overview && (
+                    <p class="text-red-500 text-xs italic">{errors.overview.message}</p>
+                  )}
                 </div>
                 <div className="flex flex-col col-span-6 sm:col-span-3 ">
                   <label className="my-2 text-sm font-medium text-gray-700 ">Schedule</label>
@@ -322,7 +377,9 @@ const AddCourse = () => {
                           accept=".ics"
                           className="px-3 py-2 mt-10 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         />
-                        {FileError ? <p class="text-red-500 text-xs italic">Please enter a valid File.</p> : null}
+                        {FileError ? (
+                          <p class="text-red-500 text-xs italic">Please enter a valid File.</p>
+                        ) : null}
                       </Stack>
                     ) : (
                       <Stack className="mt-3" direction="column">
@@ -334,8 +391,16 @@ const AddCourse = () => {
                           placeholder="Schedule Days"
                         />
 
-                        <TimeRangeInput label="Appointment time" value={timeValue} onChange={setTimeValue} />
-                        {FileError ? <p class="text-red-500 text-xs italic">Please enter all required Fields</p> : null}
+                        <TimeRangeInput
+                          label="Appointment time"
+                          value={timeValue}
+                          onChange={setTimeValue}
+                        />
+                        {FileError ? (
+                          <p class="text-red-500 text-xs italic">
+                            Please enter all required Fields
+                          </p>
+                        ) : null}
                       </Stack>
                     )}
                   </div>

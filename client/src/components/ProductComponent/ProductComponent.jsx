@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import api from "../../api/api";
@@ -9,7 +9,7 @@ const ProductComponent = ({ product }) => {
   const [modalState, setModalState] = useState(false);
 
   const navigate = useNavigate();
-  const { userCourses, access_token, setUserCourses } = useProductStore((state) => state);
+  const { userCourses, access_token, setUserCourses } = useCoursesStore((state) => state);
 
   const isProductPushased = userCourses?.find((el) => el.courseId === product.id);
   const handleBuyCourse = async () => {
@@ -75,7 +75,9 @@ const ProductComponent = ({ product }) => {
           </div>
 
           <div className="flex flex-col p-3 bg-white rounded-b">
-            <div className="text-sm font-semibold text-gray-900 truncate hover:underline">{product.title}</div>
+            <div className="text-sm font-semibold text-gray-900 truncate hover:underline">
+              {product.title}
+            </div>
 
             <div className="mt-1 text-gray-400 truncate text-xxs">{product.description}</div>
 
@@ -148,7 +150,10 @@ const ProductComponent = ({ product }) => {
       </div>
       {modalState ? (
         <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setModalState(false)}></div>
+          <div
+            className="fixed inset-0 w-full h-full bg-black opacity-40"
+            onClick={() => setModalState(false)}
+          ></div>
           <div className="flex items-center min-h-screen px-4 py-8">
             <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">
               <div className="mt-3">
@@ -169,9 +174,9 @@ const ProductComponent = ({ product }) => {
                 <div className="mt-2 text-center">
                   <h4 className="text-lg font-medium text-gray-800">Successfully accepted!</h4>
                   <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Nunc eget lorem dolor sed viverra ipsum nunc. Consequat id porta nibh
-                    venenatis.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra
+                    ipsum nunc. Consequat id porta nibh venenatis.
                   </p>
                 </div>
               </div>

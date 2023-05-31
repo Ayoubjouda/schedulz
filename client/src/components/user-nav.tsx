@@ -1,5 +1,5 @@
 import { CreditCard, LogOut, PlusCircle, Settings, User } from "lucide-react";
-import useProductStore from "../ZustandStore/store";
+import useCoursesStore from "../ZustandStore/store";
 import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
 import { Button } from "components/ui/button";
 import {
@@ -15,7 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export function UserNav() {
-  const { currentUser, setCurrentUser } = useProductStore((state) => state);
+  const { currentUser, setCurrentUser } = useCoursesStore((state) => state);
   const navigate = useNavigate();
   return (
     <DropdownMenu>

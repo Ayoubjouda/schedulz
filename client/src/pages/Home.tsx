@@ -3,7 +3,7 @@ import Faqst from "../components/FaqsCard/FaqsCard";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useToast } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
-import useProductStore from "../ZustandStore/store";
+import useCoursesStore from "../ZustandStore/store";
 import api from "../api/api";
 import { Input } from "../components/ui/input";
 import { MainNav } from "components/main-nav";

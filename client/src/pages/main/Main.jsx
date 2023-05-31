@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
 import api from "../../api/api";
@@ -16,7 +16,7 @@ const Main = () => {
     currentUser,
     access_token,
     setUserCourses,
-  } = useProductStore((state) => state);
+  } = useCoursesStore((state) => state);
 
   // products contain all courses
 

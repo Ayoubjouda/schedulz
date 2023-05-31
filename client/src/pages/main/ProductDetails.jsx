@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 import { GoogleCalendar, ICalendar } from "datebook";
 
 import { useQuery } from "react-query";
@@ -11,7 +11,7 @@ import * as FileSaver from "file-saver";
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { access_token } = useProductStore((state) => state);
+  const { access_token } = useCoursesStore((state) => state);
 
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noreferrer");
@@ -46,7 +46,12 @@ const ProductDetails = () => {
       </div>
     );
   if (error)
-    return <div className="flex items-center justify-center h-full"> Course Not found Please Purchase a course</div>;
+    return (
+      <div className="flex items-center justify-center h-full">
+        {" "}
+        Course Not found Please Purchase a course
+      </div>
+    );
   const courseSchedule = JSON.parse(data?.schedule);
 
   const convertToDate = (date) => {
@@ -143,7 +148,9 @@ const ProductDetails = () => {
             <div className="container px-4 mx-auto">
               <div className="flex flex-wrap -mx-4">
                 <div className="relative w-full mx-auto md:w-8/12">
-                  <h3 className="mt-0 mb-2 text-lg leading-normal font-regular">{data?.description}</h3>
+                  <h3 className="mt-0 mb-2 text-lg leading-normal font-regular">
+                    {data?.description}
+                  </h3>
                 </div>
               </div>
             </div>

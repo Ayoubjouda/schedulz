@@ -1,9 +1,9 @@
 import React from "react";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import ProductComponent from "../../components/ProductComponent/ProductComponent";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 const MyCourses = () => {
-  const Products = useProductStore((state) => state.Products);
+  const Products = useCoursesStore((state) => state.Products);
   return (
     <div className="MarkePlace-Container">
       <div className="MarketPlace-Title">

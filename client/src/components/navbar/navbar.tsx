@@ -1,21 +1,17 @@
-import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useProductStore from "../../ZustandStore/store";
-import { useQuery } from "react-query";
+import useCoursesStore from "../../ZustandStore/store";
 import { Input } from "components/ui/input";
 import { MainNav } from "components/main-nav";
 import { UserNav } from "components/user-nav";
 import { Button } from "components/ui/button";
 import { ShoppingCart, Heart } from "lucide-react";
-
-import api from "../../api/api";
 // Profile Dropdown
 
 const Navbar = () => {
   // const [menuState, setMenuState] = useState(false);
   const navigate = useNavigate();
   // const [categorieMenuState, setCategorieMenuState] = useState(false);
-  const { currentUser } = useProductStore((state) => state);
+  const { currentUser } = useCoursesStore((state) => state);
   // const { isLoading, error, data } = useQuery("categories", () => api.get("courses/getCategories"));
 
   return (

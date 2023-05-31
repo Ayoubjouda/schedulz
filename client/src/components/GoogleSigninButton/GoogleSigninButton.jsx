@@ -5,12 +5,12 @@ import { Spinner, useToast } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
 import api from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 
 const GoogleSigninButton = () => {
   const toast = useToast();
   const [loading, setLoading] = useState();
-  const { setToken, setCurrentUser, access_token, currentUser } = useProductStore((state) => state);
+  const { setToken, setCurrentUser, access_token, currentUser } = useCoursesStore((state) => state);
 
   const handleUserInfo = (token) => {
     if (token) {

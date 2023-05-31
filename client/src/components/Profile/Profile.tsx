@@ -1,81 +1,36 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import useProductStore from "../../ZustandStore/store";
+import useCoursesStore from "../../ZustandStore/store";
 import { useForm } from "react-hook-form";
-import { useToast } from "@chakra-ui/react";
-import { z } from "zod";
-import jwt_decode from "jwt-decode";
-import { Input } from "@chakra-ui/react";
+import { Input, Spinner } from "@chakra-ui/react";
 import _ from "lodash";
 import { zodResolver } from "@hookform/resolvers/zod";
-import api from "../../api/api";
-
-const MAX_FILE_SIZE = 3000000;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-const formData = new FormData();
-const validateSchema = z
-  .object({
-    firstName: z
-      .union([z.string().length(0), z.string().min(4)])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
-    lastName: z
-      .union([z.string().length(0), z.string().min(4)])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
-    currentPassword: z
-      .union([z.string().length(0), z.string().min(6)])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
-    newPassword: z
-      .union([z.string().length(0), z.string().min(6)])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
-    confirmPassword: z
-      .union([z.string().length(0), z.string().min(6)])
-      .optional()
-      .transform((e) => (e === "" ? null : e)),
-    profilePicture: z
-      .any()
-      .optional()
-      .refine(
-        (files) => files.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE,
-        `Max file size is 5MB.`
-      ) // this should be greater than or equals (>=) not less that or equals (<=)
-      .refine(
-        (files) => files.length === 0 || ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-        ".jpg, .jpeg, .png and .webp files are accepted."
-      ),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Password doesn't match",
-    path: ["confirmPassword"],
-  });
+import { courseFormSchemaValidator } from "lib/validators/formValidators";
+import { useProfile } from "hooks/useProfile";
 
 const Profile = () => {
-  const { currentUser, access_token, setCurrentUser, setToken } = useProductStore((state) => state);
+  const formData: FormData = new FormData();
+  const { currentUser } = useCoursesStore((state) => state);
   const navigate = useNavigate();
-  const toast = useToast();
-
+  const { isLoading, profileMutation } = useProfile();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<any>({
     mode: "onChange",
     defaultValues: {
       firstName: currentUser.firstName,
       lastName: currentUser.lastName,
     },
-    resolver: zodResolver(validateSchema),
+    resolver: zodResolver(courseFormSchemaValidator),
   });
-  function removeEmpty(obj) {
+  function removeEmpty(obj: any) {
     return Object.entries(obj)
       .filter(([_, v]) => v != null)
       .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {});
   }
-  const onSubmit = async (data) => {
-    const filtredData = removeEmpty(data);
+  const onSubmit = async (data: any) => {
+    const filtredData: any = removeEmpty(data);
 
     delete filtredData.profilePicture;
     delete filtredData.confirmPassword;
@@ -83,47 +38,7 @@ const Profile = () => {
     if (data.profilePicture.length > 0) formData.append("profilePicture", data.profilePicture[0]);
 
     if (_.isEmpty(filtredData) && !formData.has("profilePicture")) return;
-    api
-      .post("user/editprofile", formData, {
-        headers: {
-          authorization: `Bearer ${access_token}`,
-          ContentType: "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        if (res.data.statusCode === 201) {
-          setToken(res.data.access_token);
-          const user = jwt_decode(res.data.access_token);
-          setCurrentUser(user);
-          toast({
-            title: `Profile Editted Successfuly`,
-            status: "success",
-            position: "top-right",
-            isClosable: true,
-          });
-          // navigate("/dashboard/admin");
-        } else {
-          toast({
-            title: `Error Editing Profile`,
-            status: "error",
-            position: "top-right",
-            isClosable: true,
-          });
-        }
-        formData.delete("data");
-        formData.delete("profilePicture");
-      })
-      .catch((err) => {
-        toast({
-          title: `Error Editing Profile`,
-          status: "error",
-          description: err?.response?.data?.message ? err?.response?.data?.message : err?.message,
-          position: "top-right",
-          isClosable: true,
-        });
-        formData.delete("data");
-        formData.delete("profilePicture");
-      });
+    profileMutation({ formdata: formData });
   };
 
   return (
@@ -147,7 +62,6 @@ const Profile = () => {
               <label className="block text-sm font-medium text-blue-gray-900">First name</label>
               <Input
                 type="text"
-                name="first-name"
                 id="first-name"
                 style={{ backgroundColor: "white" }}
                 {...register("firstName")}
@@ -159,7 +73,6 @@ const Profile = () => {
               <label className="block text-sm font-medium text-blue-gray-900">Last name</label>
               <Input
                 type="text"
-                name="last-name"
                 style={{ backgroundColor: "white" }}
                 id="last-name"
                 {...register("lastName")}
@@ -201,7 +114,6 @@ const Profile = () => {
                     </label>
                     <input
                       id="user-photo"
-                      name="user-photo"
                       type="file"
                       {...register("profilePicture")}
                       className="absolute top-0 right-0 w-48 h-48 border-gray-300 rounded-md opacity-0 cursor-pointer"
@@ -226,28 +138,28 @@ const Profile = () => {
               </label>
               <Input
                 type="password"
-                name="Current Passwond"
                 id="Current Passwond"
                 {...register("currentPassword")}
                 style={{ backgroundColor: "white" }}
                 placeholder="********"
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
-              {errors.currentPassword && <p class="text-red-500 text-xs italic">Short Password</p>}
+              {errors.currentPassword && (
+                <p className="text-xs italic text-red-500">Short Password</p>
+              )}
             </div>
 
             <div className="sm:col-span-3">
               <label className="block text-sm font-medium text-blue-gray-900">New Passwond</label>
               <Input
                 type="password"
-                name="New Passwond"
                 id="New Passwond"
                 {...register("newPassword")}
                 placeholder="********"
                 style={{ backgroundColor: "white" }}
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
-              {errors.newPassword && <p class="text-red-500 text-xs italic">Short Password</p>}
+              {errors.newPassword && <p className="text-xs italic text-red-500">Short Password</p>}
             </div>
 
             <div className="sm:col-span-3">
@@ -256,15 +168,14 @@ const Profile = () => {
               </label>
               <Input
                 type="password"
-                name="Confirm Passwond"
                 id="Confirm Passwond"
                 {...register("confirmPassword")}
                 style={{ backgroundColor: "white" }}
                 placeholder="********"
                 className="block w-full mt-1 rounded-md shadow-sm text-blue-gray-900 focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
               />
-              {errors.confirmPassword && (
-                <p class="text-red-500 text-xs italic">Passwords don't match.</p>
+              {errors?.confirmPassword && (
+                <p className="text-xs italic text-red-500">Passwords don't match.</p>
               )}
             </div>
           </div>
@@ -281,7 +192,7 @@ const Profile = () => {
               type="submit"
               className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Save
+              {isLoading ? <Spinner /> : "Save"}
             </button>
           </div>
         </form>
