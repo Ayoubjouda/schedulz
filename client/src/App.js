@@ -15,9 +15,17 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import useCoursesStore from "./ZustandStore/store";
 import "./App.css";
 import Navbar from "components/navbar/navbar";
+import { useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 
 function App() {
   const { currentUser } = useCoursesStore((state) => state);
+  const Toast = useToast();
+  useEffect(() => {
+    Toast({
+      description: "This page is still under development",
+    });
+  });
 
   return (
     <div className="App">

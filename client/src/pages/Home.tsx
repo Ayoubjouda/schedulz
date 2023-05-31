@@ -1,14 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Faqst from "../components/FaqsCard/FaqsCard";
-import { ShoppingCart, Heart } from "lucide-react";
-import { useToast } from "@chakra-ui/react";
-import jwt_decode from "jwt-decode";
-import useCoursesStore from "../ZustandStore/store";
-import api from "../api/api";
-import { Input } from "../components/ui/input";
-import { MainNav } from "components/main-nav";
-import { UserNav } from "components/user-nav";
-import { Button } from "components/ui/button";
+
 const Home = () => {
   // Replace javascript:void(0) path with your path
   const footerNavs = [
@@ -79,6 +71,7 @@ const Home = () => {
   ];
 
   const navigate = useNavigate();
+
   return (
     <>
       {/* <header>
