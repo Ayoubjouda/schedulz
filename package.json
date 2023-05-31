@@ -8,7 +8,7 @@
     "install-client": "pnpm --prefix client install",
     "install": "pnpm run install-server && pnpm run install-client",
     "server": "pnpm --prefix server run start:dev ",
-    "client": "pnpm start --prefix client",
+    "client": "pnpm  --prefix client start",
     "watch": "pnpm run server & pnpm run client",
     "test": "pnpm --prefix server test  && pnpm --prefix client test",
     "build": "pnpm --prefix client run build && pnpm --prefix server run build",
