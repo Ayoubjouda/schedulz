@@ -57,7 +57,8 @@
     "start": "react-scripts start",
     "build": "BUILD_PATH=../server/public react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'"
   },
   "eslintConfig": {
     "extends": [
@@ -79,7 +80,16 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.195",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
     "autoprefixer": "^10.4.14",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.8",
     "sass": "^1.62.1",
     "tailwindcss": "^3.3.2"
   }

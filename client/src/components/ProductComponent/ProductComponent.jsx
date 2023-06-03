@@ -1,36 +1,40 @@
-import React, { useState } from "react";
-import useCoursesStore from "../../ZustandStore/store";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
-import api from "../../api/api";
-import "./ProductComponent.scss";
+import React, { useState } from 'react';
+import useCoursesStore from '../../ZustandStore/store';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
+import api from '../../api/api';
+import './ProductComponent.scss';
 
 const ProductComponent = ({ product }) => {
   const [modalState, setModalState] = useState(false);
 
   const navigate = useNavigate();
-  const { userCourses, access_token, setUserCourses } = useCoursesStore((state) => state);
+  const { userCourses, access_token, setUserCourses } = useCoursesStore(
+    (state) => state
+  );
 
-  const isProductPushased = userCourses?.find((el) => el.courseId === product.id);
+  const isProductPushased = userCourses?.find(
+    (el) => el.courseId === product.id
+  );
   const handleBuyCourse = async () => {
     await api
       .post(
-        "courses/buy",
+        'courses/buy',
         { courseId: product.id },
         {
           headers: {
             authorization: `Bearer ${access_token}`,
-            ContentType: "multipart/form-data",
+            ContentType: 'multipart/form-data',
           },
         }
       )
       .then((res) => console.log(res));
 
     api
-      .get("courses/usercourses", {
+      .get('courses/usercourses', {
         headers: {
           authorization: `Bearer ${access_token}`,
-          ContentType: "multipart/form-data",
+          ContentType: 'multipart/form-data',
         },
       })
       .then((res) => setUserCourses(res.data.UserCourses))
@@ -43,7 +47,7 @@ const ProductComponent = ({ product }) => {
         await handleBuyCourse();
       }
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   };
   return (
@@ -79,9 +83,13 @@ const ProductComponent = ({ product }) => {
               {product.title}
             </div>
 
-            <div className="mt-1 text-gray-400 truncate text-xxs">{product.description}</div>
+            <div className="mt-1 text-gray-400 truncate text-xxs">
+              {product.description}
+            </div>
 
-            <div className="mt-4 mb-1 text-sm font-bold text-gray-600">${product.price}</div>
+            <div className="mt-4 mb-1 text-sm font-bold text-gray-600">
+              ${product.price}
+            </div>
 
             <div className="flex flex-row mt-2">
               <div className="flex flex-col flex-auto">
@@ -111,10 +119,15 @@ const ProductComponent = ({ product }) => {
                     title="Awesome"
                   ></i>
 
-                  <div className="ml-1 text-gray-400 text-xxs hover:underline">(45)</div>
+                  <div className="ml-1 text-gray-400 text-xxs hover:underline">
+                    (45)
+                  </div>
                 </div>
 
-                <div className="mt-1 text-gray-400 text-xxs" title="34k Downlaods in this year">
+                <div
+                  className="mt-1 text-gray-400 text-xxs"
+                  title="34k Downlaods in this year"
+                >
                   34k Downloads
                 </div>
               </div>
@@ -124,7 +137,7 @@ const ProductComponent = ({ product }) => {
             {access_token && !isProductPushased ? (
               <button
                 onClick={handleCourseClick}
-                class="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
+                className="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Buy
               </button>
@@ -132,15 +145,17 @@ const ProductComponent = ({ product }) => {
             {!access_token ? (
               <button
                 onClick={() => navigate(`/login`)}
-                class="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
+                className="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Buy
               </button>
             ) : null}
             {access_token && isProductPushased ? (
               <button
-                onClick={() => navigate(`/DashBoard/productdetails/${product.id}`)}
-                class="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
+                onClick={() =>
+                  navigate(`/DashBoard/productdetails/${product.id}`)
+                }
+                className="px-3 py-3 mt-5  font-medium leading-5 text-white transition-colors duration-150 bg-emerald-600 border border-transparent rounded-lg active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Go to Course
               </button>
@@ -172,11 +187,14 @@ const ProductComponent = ({ product }) => {
                   </svg>
                 </div>
                 <div className="mt-2 text-center">
-                  <h4 className="text-lg font-medium text-gray-800">Successfully accepted!</h4>
+                  <h4 className="text-lg font-medium text-gray-800">
+                    Successfully accepted!
+                  </h4>
                   <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Nunc eget lorem dolor sed viverra
-                    ipsum nunc. Consequat id porta nibh venenatis.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Nunc eget lorem dolor sed viverra ipsum nunc.
+                    Consequat id porta nibh venenatis.
                   </p>
                 </div>
               </div>
@@ -201,7 +219,7 @@ const ProductComponent = ({ product }) => {
           </div>
         </div>
       ) : (
-        ""
+        ''
       )}
     </>
   );

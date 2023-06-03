@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import ProductComponent from "../../components/ProductComponent/ProductComponent";
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import { slice } from "lodash";
-import { Spinner } from "@chakra-ui/react";
-import api from "../../api/api";
+import ProductComponent from '../../components/ProductComponent/ProductComponent';
+import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { slice } from 'lodash';
+import { Spinner } from '@chakra-ui/react';
+import api from '../../api/api';
 
 const MarketPlace = () => {
   const { id } = useParams();
-  const { isLoading, data } = useQuery("courses", () => api.get("courses/getAllCourses"));
+  const { isLoading, data } = useQuery('courses', () =>
+    api.get('courses/getAllCourses')
+  );
   const [isCompleted, setIsCompleted] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [index, setIndex] = useState(8);
-  const filtredPosts = data?.data?.filter((el) => el.title.toLowerCase().includes(search));
-  const categoriePosts = filtredPosts?.filter((el) => el.categorie.includes(!!id ? id : ""));
+  const filtredPosts = data?.data?.filter((el) =>
+    el.title.toLowerCase().includes(search)
+  );
+  const categoriePosts = filtredPosts?.filter((el) =>
+    el.categorie.includes(id ? id : '')
+  );
   const initialPosts = slice(categoriePosts, 0, index);
   useEffect(() => {
     if (index >= categoriePosts?.length) {
@@ -30,8 +36,11 @@ const MarketPlace = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center w-full h-screen my-10">
-        {" "}
-        <Spinner size="xl" color="green.600" />
+        {' '}
+        <Spinner
+          size="xl"
+          color="green.600"
+        />
       </div>
     );
   }
@@ -39,18 +48,23 @@ const MarketPlace = () => {
   return (
     <div className="flex flex-col h-full ">
       <div className="flex items-center justify-between w-full ">
-        <h2 class="m-6 text-2xl font-semibold text-gray-700 ">Marketplace</h2>
-        <div class="pt-2 relative  text-gray-600 max-w-[200px] sm:max-w-none ">
+        <h2 className="m-6 text-2xl font-semibold text-gray-700 ">
+          Marketplace
+        </h2>
+        <div className="pt-2 relative  text-gray-600 max-w-[200px] sm:max-w-none ">
           <input
-            class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none    focus:border-emerald-600"
+            className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none    focus:border-emerald-600"
             type="search"
             name="search"
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
+          <button
+            type="submit"
+            className="absolute right-0 top-0 mt-5 mr-4"
+          >
             <svg
-              class="text-gray-600 h-4 w-4 fill-current"
+              className="text-gray-600 h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               version="1.1"
               id="Capa_1"
@@ -68,17 +82,24 @@ const MarketPlace = () => {
 
       <div className="justify-center pb-10 md:justify-start Courses-Section">
         {initialPosts?.map((product, index) => (
-          <ProductComponent key={index} product={product} index={index} />
+          <ProductComponent
+            key={index}
+            product={product}
+            index={index}
+          />
         ))}
       </div>
-      <div class="text-center ">
+      <div className="text-center ">
         {categoriePosts.length === 0 ? (
-          <div className="flex justify-center my-10 font-semibold"> No Courses Found.</div>
+          <div className="flex justify-center my-10 font-semibold">
+            {' '}
+            No Courses Found.
+          </div>
         ) : null}
         {!isCompleted ? (
           <button
             onClick={loadMore}
-            class="inline-block  mb-10 outline-none focus:outline-none align-middle transition-all duration-150 ease-in-out uppercase border border-solid font-bold last:mr-0 mr-2  text-white bg-emerald-500 border-emerald-500 active:bg-emerald-600 active:border-emerald-600 text-sm px-6 py-2 shadow hover:shadow-lg rounded-md"
+            className="inline-block  mb-10 outline-none focus:outline-none align-middle transition-all duration-150 ease-in-out uppercase border border-solid font-bold last:mr-0 mr-2  text-white bg-emerald-500 border-emerald-500 active:bg-emerald-600 active:border-emerald-600 text-sm px-6 py-2 shadow hover:shadow-lg rounded-md"
           >
             show more
           </button>

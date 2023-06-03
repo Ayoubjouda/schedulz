@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 const useCoursesStore = create(
   persist(
     (set, get) => ({
@@ -34,7 +34,7 @@ const useCoursesStore = create(
       removeAllBears: () => set({ Products: 0 }),
     }),
     {
-      name: "defaultstorage", // unique name
+      name: 'defaultstorage', // unique name
       // (optional) by default, 'localStorage' is used
     }
   )

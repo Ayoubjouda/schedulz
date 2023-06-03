@@ -1,20 +1,20 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useCoursesStore from "../../ZustandStore/store";
-import { GoogleCalendar, ICalendar } from "datebook";
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import useCoursesStore from '../../ZustandStore/store';
+import { GoogleCalendar, ICalendar } from 'datebook';
 
-import { useQuery } from "react-query";
-import moment from "moment";
-import api from "../../api/api";
-import { Spinner } from "@chakra-ui/react";
-import * as FileSaver from "file-saver";
+import { useQuery } from 'react-query';
+import moment from 'moment';
+import api from '../../api/api';
+import { Spinner } from '@chakra-ui/react';
+import * as FileSaver from 'file-saver';
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { access_token } = useCoursesStore((state) => state);
 
   const openInNewTab = (url) => {
-    window.open(url, "_blank", "noreferrer");
+    window.open(url, '_blank', 'noreferrer');
   };
   function formatDate(dateString) {
     const year = dateString.slice(0, 4);
@@ -23,15 +23,15 @@ const ProductDetails = () => {
     return `${year}-${month}-${day}`;
   }
 
-  const { isLoading, error, data } = useQuery("userCourses", () =>
+  const { isLoading, error, data } = useQuery('userCourses', () =>
     api
       .post(
-        "courses/getcoursebyid",
+        'courses/getcoursebyid',
         { courseId: id },
         {
           headers: {
             authorization: `Bearer ${access_token}`,
-            ContentType: "multipart/form-data",
+            ContentType: 'multipart/form-data',
           },
         }
       )
@@ -41,14 +41,17 @@ const ProductDetails = () => {
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-full">
-        {" "}
-        <Spinner size="xl" color="green.600" />
+        {' '}
+        <Spinner
+          size="xl"
+          color="green.600"
+        />
       </div>
     );
   if (error)
     return (
       <div className="flex items-center justify-center h-full">
-        {" "}
+        {' '}
         Course Not found Please Purchase a course
       </div>
     );
@@ -103,12 +106,12 @@ const ProductDetails = () => {
     const ics = icalendar.render();
     console.log(ics);
     const blob = new Blob([ics], {
-      type: "text/calendar",
+      type: 'text/calendar',
     });
 
-    FileSaver.saveAs(blob, "my-calendar-event.ics");
+    FileSaver.saveAs(blob, 'my-calendar-event.ics');
   };
-  if (error) navigate("/notfound");
+  if (error) navigate('/notfound');
 
   return (
     <div className="mx-4 lg:mx-0 ProductDetails-Container ">
@@ -138,7 +141,9 @@ const ProductDetails = () => {
             <div className="container px-4 mx-auto">
               <div className="flex flex-wrap -mx-4">
                 <div className="relative w-full mx-auto md:w-8/12">
-                  <h3 className="mt-0 mb-2 text-3xl font-bold leading-normal">{data?.title}</h3>
+                  <h3 className="mt-0 mb-2 text-3xl font-bold leading-normal">
+                    {data?.title}
+                  </h3>
                 </div>
               </div>
             </div>
@@ -171,7 +176,7 @@ const ProductDetails = () => {
         </div>
 
         <div className="flex justify-center w-full h-full gap-10 ">
-          {courseSchedule.type === "File" ? (
+          {courseSchedule.type === 'File' ? (
             <button
               className="px-5 py-2.5 my-10 text-white bg-emerald-600 rounded-md duration-150 hover:bg-emerald-700 active:shadow-lg"
               role="link"

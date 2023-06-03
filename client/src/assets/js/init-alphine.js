@@ -1,19 +1,19 @@
 function data() {
   function getThemeFromLocalStorage() {
     // if user already changed the theme, use it
-    if (window.localStorage.getItem("dark")) {
-      return JSON.parse(window.localStorage.getItem("dark"));
+    if (window.localStorage.getItem('dark')) {
+      return JSON.parse(window.localStorage.getItem('dark'));
     }
 
     // else return their preferences
     return (
       !!window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      window.matchMedia('(prefers-color-scheme: dark)').matches
     );
   }
 
   function setThemeToLocalStorage(value) {
-    window.localStorage.setItem("dark", value);
+    window.localStorage.setItem('dark', value);
   }
 
   return {
@@ -52,7 +52,7 @@ function data() {
     trapCleanup: null,
     openModal() {
       this.isModalOpen = true;
-      this.trapCleanup = focusTrap(document.querySelector("#modal"));
+      this.trapCleanup = focusTrap(document.querySelector('#modal'));
     },
     closeModal() {
       this.isModalOpen = false;

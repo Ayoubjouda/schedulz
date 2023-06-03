@@ -1,20 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { ChakraProvider } from "@chakra-ui/react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MantineProvider } from "@mantine/core";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { ChakraProvider } from '@chakra-ui/react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { MantineProvider } from '@mantine/core';
 
 const queryClient = new QueryClient();
-const root = ReactDOM.createRoot(document.getElementById("root") as Element);
+const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+      >
         <ChakraProvider>
           <GoogleOAuthProvider clientId="933722326663-oheosig8bmjmhdc5npj1af7b05aknsa6.apps.googleusercontent.com">
             <BrowserRouter>

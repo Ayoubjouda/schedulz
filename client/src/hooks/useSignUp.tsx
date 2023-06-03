@@ -1,12 +1,20 @@
-import useCoursesStore from "ZustandStore/store";
-import api from "../api/api";
-import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
-import jwt_decode from "jwt-decode";
+import useCoursesStore from 'ZustandStore/store';
+import api from '../api/api';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
+import jwt_decode from 'jwt-decode';
 
-async function signUp(username: string, email: string, password: string): Promise<SignUpResponse> {
-  const { data } = await api.post("auth/signup", { username, email, password }, { timeout: 4000 });
+async function signUp(
+  username: string,
+  email: string,
+  password: string
+): Promise<SignUpResponse> {
+  const { data } = await api.post(
+    'auth/signup',
+    { username, email, password },
+    { timeout: 4000 }
+  );
 
   return data;
 }
@@ -32,22 +40,22 @@ export function useSignUp() {
         setCurrentUser(user);
         toast({
           title: `Welcome ${user.username}.`,
-          description: "Account Created Successfuly",
-          status: "success",
+          description: 'Account Created Successfuly',
+          status: 'success',
           duration: 9000,
           isClosable: true,
         });
-        navigate("/dashboard/marketplace");
+        navigate('/dashboard/marketplace');
       }
     },
 
     onError: (error: any) => {
       toast({
-        title: "Login Failure.",
+        title: 'Login Failure.',
         description: error.response.data.message
           ? error.response.data.message
-          : "Account Creation Failure.",
-        status: "error",
+          : 'Account Creation Failure.',
+        status: 'error',
         duration: 9000,
         isClosable: true,
       });

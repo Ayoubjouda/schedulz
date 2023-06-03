@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import useCoursesStore from "../../ZustandStore/store";
-import { Input } from "components/ui/input";
-import { MainNav } from "components/main-nav";
-import { UserNav } from "components/user-nav";
-import { Button } from "components/ui/button";
-import { ShoppingCart, Heart } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import useCoursesStore from '../../ZustandStore/store';
+import { Input } from 'components/ui/input';
+import { MainNav } from 'components/main-nav';
+import { UserNav } from 'components/user-nav';
+import { Button } from 'components/ui/button';
+import { ShoppingCart, Heart } from 'lucide-react';
 // Profile Dropdown
 
 const Navbar = () => {
@@ -44,14 +44,14 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   className="font-semibold"
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate('/login')}
                 >
                   Log in
                 </Button>
                 <Button
                   variant="default"
                   className="font-semibold bg-emerald-600 hover:bg-emerald-700"
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate('/register')}
                 >
                   Sign Up
                 </Button>

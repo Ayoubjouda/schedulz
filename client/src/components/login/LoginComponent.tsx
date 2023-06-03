@@ -1,19 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import GoogleSigninButton from "../GoogleSigninButton/GoogleSigninButton";
-import { Spinner } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/ui/form";
-import { Input } from "components/ui/input";
-import { loginSchemaValidator, LoginSchemaType } from "lib/validators/formValidators";
-import { useSignIn } from "hooks/useSignIn";
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import GoogleSigninButton from '../GoogleSigninButton/GoogleSigninButton';
+import { Spinner } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from 'components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from 'components/ui/form';
+import { Input } from 'components/ui/input';
+import {
+  loginSchemaValidator,
+  LoginSchemaType,
+} from 'lib/validators/formValidators';
+import { useSignIn } from 'hooks/useSignIn';
 
 const LoginComponent = () => {
   const navigate = useNavigate();
 
   const form = useForm<LoginSchemaType>({
-    mode: "onBlur",
+    mode: 'onBlur',
     resolver: zodResolver(loginSchemaValidator),
   });
 
@@ -45,7 +55,10 @@ const LoginComponent = () => {
           <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-5">
+                <form
+                  onSubmit={form.handleSubmit(handleLogin)}
+                  className="space-y-5"
+                >
                   <FormField
                     control={form.control}
                     name="email"
@@ -53,7 +66,10 @@ const LoginComponent = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your email address" {...field} />
+                          <Input
+                            placeholder="Enter your email address"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -67,7 +83,10 @@ const LoginComponent = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your password" {...field} />
+                          <Input
+                            placeholder="Enter your password"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -79,7 +98,7 @@ const LoginComponent = () => {
                     disabled={isLoading}
                     type="submit"
                   >
-                    {isLoading ? <Spinner size="sm" /> : "Login"}
+                    {isLoading ? <Spinner size="sm" /> : 'Login'}
                   </Button>
                 </form>
               </Form>
@@ -88,7 +107,7 @@ const LoginComponent = () => {
               <p className="mt-4">
                 <button
                   className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline"
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate('/register')}
                 >
                   Create account
                 </button>

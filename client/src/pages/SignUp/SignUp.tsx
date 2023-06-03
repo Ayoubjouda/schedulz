@@ -1,20 +1,30 @@
-import { useForm } from "react-hook-form";
-import { Spinner } from "@chakra-ui/react";
-import GoogleSigninButton from "../../components/GoogleSigninButton/GoogleSigninButton";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { Button } from "components/ui/button";
-import { Label } from "components/ui/label";
-import { Input } from "components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "components/ui/form";
-import { RegisterSchema, RegisterSchemaType } from "lib/validators/formValidators";
-import { useSignUp } from "hooks/useSignUp";
+import { useForm } from 'react-hook-form';
+import { Spinner } from '@chakra-ui/react';
+import GoogleSigninButton from '../../components/GoogleSigninButton/GoogleSigninButton';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'components/ui/button';
+import { Label } from 'components/ui/label';
+import { Input } from 'components/ui/input';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from 'components/ui/form';
+import {
+  RegisterSchema,
+  RegisterSchemaType,
+} from 'lib/validators/formValidators';
+import { useSignUp } from 'hooks/useSignUp';
 
 const SignUp = () => {
   const navigate = useNavigate();
 
   const form = useForm<any>({
-    mode: "onBlur",
+    mode: 'onBlur',
     resolver: zodResolver(RegisterSchema),
   });
 
@@ -35,7 +45,7 @@ const SignUp = () => {
               className="object-cover w-full h-screen dark:hidden"
               alt="Office"
               src={
-                "https://images.pexels.com/photos/3585090/pexels-photo-3585090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                'https://images.pexels.com/photos/3585090/pexels-photo-3585090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
               }
             />
             <img
@@ -47,7 +57,9 @@ const SignUp = () => {
           </div>
           <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
-              <h1 className="mb-4 text-xl font-semibold text-gray-700 ">Create account</h1>
+              <h1 className="mb-4 text-xl font-semibold text-gray-700 ">
+                Create account
+              </h1>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit((data) => handleRegister(data))}
@@ -60,7 +72,10 @@ const SignUp = () => {
                       <FormItem>
                         <FormLabel>Full Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your full name" {...field} />
+                          <Input
+                            placeholder="Enter your full name"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -74,7 +89,10 @@ const SignUp = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your email address" {...field} />
+                          <Input
+                            placeholder="Enter your email address"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -88,7 +106,11 @@ const SignUp = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your password" type="password" {...field} />
+                          <Input
+                            placeholder="Enter your password"
+                            type="password"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -102,7 +124,11 @@ const SignUp = () => {
                       <FormItem>
                         <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="Confirm your password" type="password" {...field} />
+                          <Input
+                            placeholder="Confirm your password"
+                            type="password"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -145,7 +171,7 @@ const SignUp = () => {
 
               <p className="mt-4">
                 <button
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate('/login')}
                   className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline"
                 >
                   Already have an account ? Login

@@ -1,6 +1,13 @@
-import React from "react";
+import React from 'react';
 
-const Pagination = ({ postsPerPage, totalPosts, paginate, nextPage, previousPage, currentPage }) => {
+const Pagination = ({
+  postsPerPage,
+  totalPosts,
+  paginate,
+  nextPage,
+  previousPage,
+  currentPage,
+}) => {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
@@ -19,7 +26,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, nextPage, previousPage
           key={number}
           onClick={() => paginate(number)}
           className={`px-3 py-1 rounded-md cursor-pointer focus:outline-none focus:shadow-outline-purpler ${
-            number === currentPage ? "bg-emerald-700 text-white" : ""
+            number === currentPage ? 'bg-emerald-700 text-white' : ''
           }`}
         >
           {number}

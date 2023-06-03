@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useQuery, useQueryClient } from "react-query";
-import api from "../../api/api";
-import moment from "moment";
-import { Spinner } from "@chakra-ui/react";
-import useCoursesStore from "../../ZustandStore/store";
-import Pagination from "../../components/Pagination/Pagination";
-import { useToast } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from 'react-query';
+import api from '../../api/api';
+import moment from 'moment';
+import { Spinner } from '@chakra-ui/react';
+import useCoursesStore from '../../ZustandStore/store';
+import Pagination from '../../components/Pagination/Pagination';
+import { useToast } from '@chakra-ui/react';
 
 const Admin = () => {
   const queryClient = useQueryClient();
@@ -14,12 +14,16 @@ const Admin = () => {
   const { access_token } = useCoursesStore((state) => state);
   const toast = useToast();
 
-  const { isLoading, error, data } = useQuery("courses", () => api.get("courses/getAllCourses"));
+  const { isLoading, error, data } = useQuery('courses', () =>
+    api.get('courses/getAllCourses')
+  );
   const [currentPage, setCurrentPage] = useState(1);
 
   const postsPerPage = 10;
-  const [search, setSearch] = useState("");
-  const filtredData = data?.data.filter((el) => el.title.toLowerCase().includes(search));
+  const [search, setSearch] = useState('');
+  const filtredData = data?.data.filter((el) =>
+    el.title.toLowerCase().includes(search)
+  );
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -42,29 +46,29 @@ const Admin = () => {
   const handleDelete = async (courseId) => {
     api
       .post(
-        "courses/deleteCourse",
+        'courses/deleteCourse',
         { id: courseId },
         {
           headers: {
             authorization: `Bearer ${access_token}`,
-            ContentType: "multipart/form-data",
+            ContentType: 'multipart/form-data',
           },
         }
       )
       .then((res) => {
-        queryClient.invalidateQueries({ queryKey: ["courses"] });
+        queryClient.invalidateQueries({ queryKey: ['courses'] });
         toast({
           title: `Course Deleted Successfuly`,
-          status: "success",
-          position: "top-right",
+          status: 'success',
+          position: 'top-right',
           isClosable: true,
         });
       })
       .catch((err) => {
         toast({
           title: `Error Deleting the Course`,
-          status: "error",
-          position: "top-right",
+          status: 'error',
+          position: 'top-right',
           isClosable: true,
         });
       });
@@ -76,11 +80,13 @@ const Admin = () => {
         <div className="flex flex-col flex-1 ">
           <main className="h-full pb-16 ">
             <div className="container grid px-6 mx-auto ">
-              <h2 className="my-6 text-2xl font-semibold text-gray-700 ">Admin</h2>
+              <h2 className="my-6 text-2xl font-semibold text-gray-700 ">
+                Admin
+              </h2>
 
               <div className="flex flex-col items-end">
                 <button
-                  onClick={() => navigate("/dashboard/addcourse")}
+                  onClick={() => navigate('/dashboard/addcourse')}
                   className="px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-lg bg-emerald-600 active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
                 >
                   Add course
@@ -93,7 +99,10 @@ const Admin = () => {
                     placeholder="Search"
                     onChange={(e) => setSearch(e.target.value)}
                   />
-                  <button type="submit" className="absolute top-0 right-0 mt-5 mr-4">
+                  <button
+                    type="submit"
+                    className="absolute top-0 right-0 mt-5 mr-4"
+                  >
                     <svg
                       className="w-4 h-4 text-gray-600 fill-current"
                       xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +135,10 @@ const Admin = () => {
                     <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                       {data && !isLoading
                         ? currentPosts.map((el, index) => (
-                            <tr key={index} className="text-gray-700 bg-white ">
+                            <tr
+                              key={index}
+                              className="text-gray-700 bg-white "
+                            >
                               <td className="px-4 py-3">
                                 <div className="flex items-center text-sm">
                                   <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -135,7 +147,7 @@ const Admin = () => {
                                       src={
                                         data?.data?.length > 0
                                           ? `${process.env.REACT_APP_API_URL}${el?.PostMedia?.[1]?.filePath}`
-                                          : ""
+                                          : ''
                                       }
                                       alt=""
                                       loading="lazy"
@@ -147,19 +159,27 @@ const Admin = () => {
                                   </div>
                                   <div>
                                     <p className="font-semibold">{el?.title}</p>
-                                    <p className="text-xs text-gray-600 ">{el?.categorie}</p>
+                                    <p className="text-xs text-gray-600 ">
+                                      {el?.categorie}
+                                    </p>
                                   </div>
                                 </div>
                               </td>
-                              <td className="px-4 py-3 text-sm">$ {el?.price}</td>
-                              <td className="px-4 py-3 text-sm">{el?.instructor}</td>
                               <td className="px-4 py-3 text-sm">
-                                {moment(Date(el?.createdAt)).format("ll")}
+                                $ {el?.price}
+                              </td>
+                              <td className="px-4 py-3 text-sm">
+                                {el?.instructor}
+                              </td>
+                              <td className="px-4 py-3 text-sm">
+                                {moment(Date(el?.createdAt)).format('ll')}
                               </td>
                               <td className="px-4 py-3">
                                 <div className="flex items-center space-x-4 text-sm">
                                   <button
-                                    onClick={() => navigate(`/Dashboard/editcourse/${el.id}`)}
+                                    onClick={() =>
+                                      navigate(`/Dashboard/editcourse/${el.id}`)
+                                    }
                                     className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-emerald-600 focus:outline-none focus:shadow-outline-gray"
                                     aria-label="Edit"
                                   >
@@ -200,13 +220,16 @@ const Admin = () => {
 
                   {!data && isLoading ? (
                     <div className="flex justify-center my-10">
-                      {" "}
-                      <Spinner size="xl" color="green.600" />
+                      {' '}
+                      <Spinner
+                        size="xl"
+                        color="green.600"
+                      />
                     </div>
                   ) : null}
                   {data?.data?.length === 0 && !isLoading ? (
                     <div className="flex justify-center my-10 font-semibold">
-                      {" "}
+                      {' '}
                       No Courses Found.
                     </div>
                   ) : null}

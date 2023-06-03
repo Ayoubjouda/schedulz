@@ -1,7 +1,7 @@
-import React from "react";
-import SectionTitle from "../../components/SectionTitle/SectionTitle";
-import ProductComponent from "../../components/ProductComponent/ProductComponent";
-import useCoursesStore from "../../ZustandStore/store";
+import React from 'react';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import ProductComponent from '../../components/ProductComponent/ProductComponent';
+import useCoursesStore from '../../ZustandStore/store';
 const MyCourses = () => {
   const Products = useCoursesStore((state) => state.Products);
   return (
@@ -14,7 +14,7 @@ const MyCourses = () => {
           Products.map((product) => <ProductComponent product={product} />)
         ) : (
           <div className="text-lg text-black flex h-full w-full justify-center">
-            {" "}
+            {' '}
             <i>No Courses avaible yet</i>
           </div>
         )}

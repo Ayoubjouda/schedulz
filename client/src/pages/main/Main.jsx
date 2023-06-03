@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import useCoursesStore from "../../ZustandStore/store";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/navbar";
-import api from "../../api/api";
+import React, { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import useCoursesStore from '../../ZustandStore/store';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/navbar/navbar';
+import api from '../../api/api';
 const Main = () => {
   const [navshown, setNavshown] = useState(false);
 
@@ -23,10 +23,10 @@ const Main = () => {
   const navigate = useNavigate();
   useEffect(() => {
     api
-      .get("courses/usercourses", {
+      .get('courses/usercourses', {
         headers: {
           authorization: `Bearer ${access_token}`,
-          ContentType: "multipart/form-data",
+          ContentType: 'multipart/form-data',
         },
       })
       .then((res) => setUserCourses(res.data.UserCourses))

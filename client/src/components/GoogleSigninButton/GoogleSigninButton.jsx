@@ -1,31 +1,32 @@
-import React, { useState } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import { Spinner, useToast } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { Spinner, useToast } from '@chakra-ui/react';
 
-import jwt_decode from "jwt-decode";
-import api from "../../api/api";
-import { useNavigate } from "react-router-dom";
-import useCoursesStore from "../../ZustandStore/store";
+import jwt_decode from 'jwt-decode';
+import api from '../../api/api';
+import { useNavigate } from 'react-router-dom';
+import useCoursesStore from '../../ZustandStore/store';
 
 const GoogleSigninButton = () => {
   const toast = useToast();
   const [loading, setLoading] = useState();
-  const { setToken, setCurrentUser, access_token, currentUser } = useCoursesStore((state) => state);
+  const { setToken, setCurrentUser, access_token, currentUser } =
+    useCoursesStore((state) => state);
 
   const handleUserInfo = (token) => {
     if (token) {
       setToken(token);
       const user = jwt_decode(token);
-      if (!user) throw Error("no current user");
+      if (!user) throw Error('no current user');
       setCurrentUser(user);
       toast({
         title: `Welcome ${user.username}`,
-        description: "Login Successful",
-        status: "success",
+        description: 'Login Successful',
+        status: 'success',
         duration: 9000,
         isClosable: true,
       });
-      navigate("/dashboard/marketplace");
+      navigate('/dashboard/marketplace');
     }
   };
 
@@ -33,7 +34,7 @@ const GoogleSigninButton = () => {
   const uselogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       api
-        .post("auth/googlesignin", {
+        .post('auth/googlesignin', {
           access_token: codeResponse.access_token,
         })
         .then((res) => {
@@ -44,11 +45,11 @@ const GoogleSigninButton = () => {
         })
         .catch((err) =>
           toast({
-            title: "Login error.",
+            title: 'Login error.',
             description: err.response?.data?.message
               ? err.response?.data?.message
-              : "Google Network Error",
-            status: "error",
+              : 'Google Network Error',
+            status: 'error',
             duration: 9000,
             isClosable: true,
           })
@@ -56,9 +57,9 @@ const GoogleSigninButton = () => {
     },
     onError: (errorResponse) =>
       toast({
-        title: "Login error.",
+        title: 'Login error.',
         description: errorResponse,
-        status: "error",
+        status: 'error',
         duration: 9000,
         isClosable: true,
       }),
