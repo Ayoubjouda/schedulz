@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import Faqst from '../components/FaqsCard/FaqsCard';
-
+import Faqst from 'components/FaqsCard/FaqsCard';
+import HeroImage from 'assets/images/imageProto.jpeg';
+import ProductComponent from 'components/ProductComponent/ProductComponent';
+import { Button } from 'components/ui/button';
 const Home = () => {
   // Replace javascript:void(0) path with your path
   const footerNavs = [
@@ -33,7 +35,9 @@ const Home = () => {
 
   const posts = [
     {
+      id: 1,
       title: 'What is SaaS? Software as a Service Explained',
+      categorie: 'Business',
       desc: 'Going into this journey, I had a standard therapy regimen, based on looking at the research literature. After I saw the movie, I started to ask other people what they did for their anxiety, and some',
       img: 'https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
       authorLogo: 'https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg',
@@ -42,7 +46,9 @@ const Home = () => {
       href: 'javasd(0)',
     },
     {
+      id: 2,
       title: 'A Quick Guide to WordPress Hosting',
+      categorie: 'Business',
       desc: "According to him, â€œI'm still surprised that this has happened. But we are surprised because we are so surprised.â€More revelations about Whittington will be featured in the film",
       img: 'https://images.unsplash.com/photo-1620287341056-49a2f1ab2fdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
       authorLogo: 'https://api.uifaces.co/our-content/donated/FJkauyEa.jpg',
@@ -51,7 +57,10 @@ const Home = () => {
       href: 'javascrd(0)',
     },
     {
+      id: 3,
       title: '7 Promising VS Code Extensions Introduced in 2022',
+      categorie: 'Business',
+
       desc: "I hope I remembered all the stuff that they needed to know. They're like, 'okay,' and write it in their little reading notebooks. I realized today that I have all this stuff that",
       img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
       authorLogo: 'https://randomuser.me/api/portraits/men/46.jpg',
@@ -60,7 +69,31 @@ const Home = () => {
       href: 'javd(0)',
     },
     {
+      id: 4,
       title: 'How to Use Root C++ Interpreter Shell to Write C++ Programs',
+      categorie: 'Business',
+      desc: "The powerful gravity waves resulting from the impact of the planets' moons â€” four in total â€” were finally resolved in 2015 when gravitational microlensing was used to observe the",
+      img: 'https://images.unsplash.com/photo-1617529497471-9218633199c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      authorLogo: 'https://api.uifaces.co/our-content/donated/KtCFjlD4.jpg',
+      authorName: 'Lourin',
+      date: 'Jan 4 2022',
+      href: 'javascrd(0)',
+    },
+    {
+      id: 5,
+      title: 'How to Use Root C++ Interpreter Shell to Write C++ Programs',
+      categorie: 'Business',
+      desc: "The powerful gravity waves resulting from the impact of the planets' moons â€” four in total â€” were finally resolved in 2015 when gravitational microlensing was used to observe the",
+      img: 'https://images.unsplash.com/photo-1617529497471-9218633199c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      authorLogo: 'https://api.uifaces.co/our-content/donated/KtCFjlD4.jpg',
+      authorName: 'Lourin',
+      date: 'Jan 4 2022',
+      href: 'javascrd(0)',
+    },
+    {
+      id: 6,
+      title: 'How to Use Root C++ Interpreter Shell to Write C++ Programs',
+      categorie: 'Business',
       desc: "The powerful gravity waves resulting from the impact of the planets' moons â€” four in total â€” were finally resolved in 2015 when gravitational microlensing was used to observe the",
       img: 'https://images.unsplash.com/photo-1617529497471-9218633199c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
       authorLogo: 'https://api.uifaces.co/our-content/donated/KtCFjlD4.jpg',
@@ -74,76 +107,11 @@ const Home = () => {
 
   return (
     <>
-      {/* <header>
-        <nav className="items-center h-auto px-4 pt-5 mx-auto sm:px-8 md:space-x-6">
-          <div className="border-b">
-            <div className="flex items-center h-16 px-4">
-              <MainNav className="mx-6" />
-              <div className="flex items-center ml-auto space-x-4">
-                <div>
-                  <Input
-                    type="search"
-                    placeholder="Search for anything"
-                    className="h-9 md:w-[100px] lg:w-[300px]"
-                  />
-                </div>
-                <div className="flex items-center hidden ml-auto space-x-4">
-                  <div>
-                    <Button variant="ghost">
-                      <Heart className="w-4 h-4 " />
-                    </Button>
-                    <Button variant="ghost">
-                      <ShoppingCart className="w-4 h-4 " />
-                    </Button>
-                  </div>
-                  <UserNav />
-                </div>
-                <div className="space-x-4">
-                  <Button
-                    variant="ghost"
-                    className="font-semibold"
-                    onClick={() => navigate("/login")}
-                  >
-                    Log in
-                  </Button>
-                  <Button
-                    variant="default"
-                    className="font-semibold bg-emerald-600 hover:bg-emerald-700"
-                    onClick={() => navigate("/login")}
-                  >
-                    Sign Up
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* <div className="flex justify-between ">
-            <div
-              onClick={() => navigate("/")}
-              className="text-lg font-bold lg:ml-10 text-emerald-600"
-            >
-              Schedulz
-            </div>
-            <div
-              onClick={() => navigate("/marketplace")}
-              className="text-sm text-gray-500 cursor-pointer md:text-lg hover:text-emerald-600"
-            >
-              Courses
-            </div>
-            <div
-              onClick={() => navigate("/login")}
-              className="block w-32 px-6 py-3 text-center text-white rounded-md shadow-md bg-emerald-500 focus:shadow-none md:cursor-pointer"
-            >
-              Sign In
-            </div>
-          </div> 
-        </nav>
-      </header> */}
       <section className="relative max-w-screen-xl px-4 py-4 mx-auto mt-32 cta-sec sm:px-8 ">
         <div className="absolute top-0 left-0 w-full h-full bg-white opacity-40"></div>
         <div className="relative items-center gap-5 lg:flex">
-          <div className="flex-1 max-w-lg py-5 sm:mx-auto sm:text-center lg:max-w-max lg:text-left">
-            <h3 className="text-3xl font-semibold text-gray-800 md:text-4xl">
+          <div className="flex-1 max-w-lg py-5 space-y-10 sm:mx-auto sm:text-center lg:max-w-max lg:text-left">
+            <h3 className="text-3xl font-semibold text-gray-800 md:text-4xl lg:text-6xl">
               We do the planning,You do the learning. {''}
               <span className="text-emerald-500">Schedulz</span>
             </h3>
@@ -153,7 +121,7 @@ const Home = () => {
               porta lacinia.
             </p>
             <button
-              className="inline-flex items-center px-4 py-2 mt-5 font-medium text-green-500 rounded-full bg-indigo-50"
+              className="inline-flex items-center px-4 py-2 mt-5 font-medium font-semibold text-white rounded bg-emerald-600"
               onClick={() => navigate('/login')}
             >
               Try it out
@@ -175,7 +143,7 @@ const Home = () => {
           </div>
           <div className="flex-1 mx-auto mt-5 sm:w-9/12 lg:mt-0 lg:w-auto">
             <img
-              src={''}
+              src={HeroImage}
               alt=""
               className="w-full rounded"
             />
@@ -188,53 +156,126 @@ const Home = () => {
           }
         `}</style>
       </section>
+      <div className="mt-24 ">
+        <div className="flex flex-col items-center justify-center py-12 space-y-10">
+          <div className="flex flex-col items-center justify-center space-y-2">
+            <h1 className="text-sm font-semibold leading-none text-gray-800 md:text-base">
+              AS SEEN IN
+            </h1>
+            <div className="w-9 h-0.5 bg-gray-300" />
+          </div>
+          <div className="flex items-center justify-center space-x-4 md:space-x-6 lg:space-x-16">
+            <div className="h-3 w-11 md:w-16 md:h-5 lg:w-28 lg:h-8">
+              <img
+                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/partner_9_svg1.svg"
+                alt="logo 1"
+              />
+            </div>
+            <div className="w-16 h-3 lg:w-44 lg:h-8">
+              <img
+                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/partner_9_svg2.svg"
+                alt="logo 2"
+              />
+            </div>
+            <div className="w-16 h-2.5 md:w-16 md:h-2.5 lg:w-44 lg:h-6">
+              <img
+                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/partner_9_svg3.svg"
+                alt="logo 3"
+              />
+            </div>
+            <div className="h-3 w-11 md:w-16 md:h-5 lg:w-28 lg:h-8">
+              <img
+                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/partner_9_svg4.svg"
+                alt="logo 4"
+              />
+            </div>
+            <div className="w-8 h-3 md:w-16 md:h-7 lg:w-20 lg:h-8">
+              <img
+                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/partner_9_svg5.svg"
+                alt="logo 5"
+              />
+            </div>
+            <div className="h-3 w-11 md:w-16 md:h-5 lg:w-28 lg:h-8">
+              <img
+                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/partner_9_svg1.svg"
+                alt="logo 5"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <section className="max-w-screen-xl px-4 mx-auto mt-32 lg:px-8 ">
         <div className="text-center">
           <h1 className="text-3xl font-semibold text-gray-800">
-            Available Courses
+            Courses to Get you Started
           </h1>
           <p className="mt-3 text-gray-500">
-            Blogs that are loved by the community. Updated every hour.
+            Courses that are loved by the community. Updated every hour.
           </p>
         </div>
 
         <div className="grid gap-2 mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((items, index) => (
-            <article
-              className="max-w-md mx-auto mt-4 duration-300 border rounded-md shadow-lg hover:shadow-sm"
+            <ProductComponent
               key={index}
-            >
-              <a href={items.href}>
-                <img
-                  src={items.img}
-                  loading="lazy"
-                  alt={items.title}
-                  className="w-full h-48 rounded-t-md"
-                />
-                <div className="flex items-center pt-3 mt-2 ml-4 mr-2">
-                  <div className="flex-none w-10 h-10 rounded-full">
-                    <img
-                      src={items.authorLogo}
-                      className="w-full h-full rounded-full"
-                      alt={items.authorName}
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <span className="block text-gray-900">
-                      {items.authorName}
-                    </span>
-                    <span className="block text-sm text-gray-400">
-                      {items.date}
-                    </span>
-                  </div>
-                </div>
-                <div className="pt-3 mb-3 ml-4 mr-2">
-                  <h3 className="text-xl text-gray-900">{items.title}</h3>
-                  <p className="mt-1 text-sm text-gray-400">{items.desc}</p>
-                </div>
-              </a>
-            </article>
+              product={{
+                id: items.id,
+                title: items.title,
+                description: items.desc,
+                categorie: items.categorie,
+                authorName: items.authorName,
+                price: 132,
+                PostMedia: [{ id: 44, filePath: items.img }],
+              }}
+            />
           ))}
+        </div>
+        <div className="mx-auto my-10 w-fit ">
+          <Button className="font-semibold text-md bg-emerald-600 hover:bg-emerald-700">
+            Explore all Courses &rarr;
+          </Button>
+        </div>
+      </section>
+      <section className="py-14 bg-emerald-50">
+        <div className="max-w-screen-xl mx-auto md:px-8">
+          <div className="items-center gap-x-12 sm:px-4 md:px-0 lg:flex">
+            <div className="flex-1 sm:hidden lg:block">
+              <img
+                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                className="md:max-w-lg sm:rounded-lg"
+                alt=""
+              />
+            </div>
+            <div className="max-w-xl px-4 mt-6 space-y-7 sm:px-0 md:mt-0 lg:max-w-2xl">
+              <h3 className="font-semibold text-emerald-600">For Learners</h3>
+              <p className="text-3xl font-semibold text-gray-800 sm:text-4xl">
+                Take the next step toward tour goals
+              </p>
+              <p className="mt-3 text-gray-600">
+                start,switch,or advance your carrer with more than 4000 courses,
+                Professional Certificates, from world class universities and
+                professionals in the field.
+              </p>
+              <a
+                href="javascript:void(0)"
+                className="inline-flex items-center font-medium duration-150 text-emerald-600 gap-x-1 hover:text-emerald-500"
+              >
+                Let&apos;s get Started
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
       <Faqst />
@@ -242,8 +283,8 @@ const Home = () => {
         <div className="max-w-lg sm:mx-auto sm:text-center">
           <div className="text-2xl font-bold text-emerald-600">schedulz</div>
           <p className="leading-relaxed mt-2 text-[15px]">
-            Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
+            Lorem Ipsum has been the industry&quot;s standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book.
           </p>
         </div>

@@ -303,7 +303,7 @@ const EditCourse = () => {
                     {...register('title')}
                   />
                   {errors.title && (
-                    <p className="text-red-500 text-xs italic">
+                    <p className="text-xs italic text-red-500">
                       Please enter a valid Title.
                     </p>
                   )}
@@ -322,7 +322,7 @@ const EditCourse = () => {
                     defaultValue={courseData?.title}
                   />
                   {errors.instructor && (
-                    <p className="text-red-500 text-xs italic">
+                    <p className="text-xs italic text-red-500">
                       Please enter a valid Name.
                     </p>
                   )}
@@ -347,7 +347,7 @@ const EditCourse = () => {
                   </select>
 
                   {errors.skillLevel && (
-                    <p className="text-red-500 text-xs italic">
+                    <p className="text-xs italic text-red-500">
                       Please enter a valid SkillLevel.
                     </p>
                   )}
@@ -365,8 +365,8 @@ const EditCourse = () => {
                     defaultValue={courseData?.title}
                   />
                   {errors.language && (
-                    <p className="text-red-500 text-xs italic">
-                      this field can't be empty
+                    <p className="text-xs italic text-red-500">
+                      this field can&quot;t be empty
                     </p>
                   )}
                 </div>
@@ -424,8 +424,8 @@ const EditCourse = () => {
                     {...register('description')}
                   />
                   {errors.description && (
-                    <p className="text-red-500 text-xs italic">
-                      this field can't be empty
+                    <p className="text-xs italic text-red-500">
+                      this field can&quot;t be empty
                     </p>
                   )}
                 </div>
@@ -441,8 +441,8 @@ const EditCourse = () => {
                     {...register('videoUrl')}
                   />
                   {errors.videoUrl && (
-                    <p className="text-red-500 text-xs italic">
-                      this field can't be empty
+                    <p className="text-xs italic text-red-500">
+                      this field can&quot;t be empty
                     </p>
                   )}
                 </div>
@@ -459,7 +459,7 @@ const EditCourse = () => {
                   />
 
                   {errors.price && (
-                    <p className="text-red-500 text-xs italic">
+                    <p className="text-xs italic text-red-500">
                       please enter a correct number
                     </p>
                   )}
@@ -486,7 +486,7 @@ const EditCourse = () => {
                     />
                   </div>
                   {errors.thumbnail && (
-                    <p className="text-red-500 text-xs italic">
+                    <p className="text-xs italic text-red-500">
                       {errors.thumbnail.message}
                     </p>
                   )}
@@ -511,7 +511,7 @@ const EditCourse = () => {
                     />
                   </div>
                   {errors.overview && (
-                    <p className="text-red-500 text-xs italic">
+                    <p className="text-xs italic text-red-500">
                       {errors.overview.message}
                     </p>
                   )}
@@ -539,7 +539,7 @@ const EditCourse = () => {
                           className="px-3 py-2 mt-10 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         />
                         {FileError ? (
-                          <p className="text-red-500 text-xs italic">
+                          <p className="text-xs italic text-red-500">
                             Please enter a valid File.
                           </p>
                         ) : null}
@@ -563,7 +563,7 @@ const EditCourse = () => {
                           onChange={setTimeValue}
                         />
                         {FileError ? (
-                          <p className="text-red-500 text-xs italic">
+                          <p className="text-xs italic text-red-500">
                             Please enter all required Fields
                           </p>
                         ) : null}

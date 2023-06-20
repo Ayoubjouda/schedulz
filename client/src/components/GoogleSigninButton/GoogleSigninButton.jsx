@@ -10,8 +10,7 @@ import useCoursesStore from '../../ZustandStore/store';
 const GoogleSigninButton = () => {
   const toast = useToast();
   const [loading, setLoading] = useState();
-  const { setToken, setCurrentUser, access_token, currentUser } =
-    useCoursesStore((state) => state);
+  const { setToken, setCurrentUser, access_token, currentUser } = useCoursesStore((state) => state);
 
   const handleUserInfo = (token) => {
     if (token) {

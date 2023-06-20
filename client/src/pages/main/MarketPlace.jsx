@@ -53,7 +53,7 @@ const MarketPlace = () => {
         </h2>
         <div className="pt-2 relative  text-gray-600 max-w-[200px] sm:max-w-none ">
           <input
-            className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none    focus:border-emerald-600"
+            className="h-10 px-5 pr-16 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-emerald-600"
             type="search"
             name="search"
             placeholder="Search"
@@ -61,10 +61,10 @@ const MarketPlace = () => {
           />
           <button
             type="submit"
-            className="absolute right-0 top-0 mt-5 mr-4"
+            className="absolute top-0 right-0 mt-5 mr-4"
           >
             <svg
-              className="text-gray-600 h-4 w-4 fill-current"
+              className="w-4 h-4 text-gray-600 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               version="1.1"
               id="Capa_1"
@@ -99,7 +99,7 @@ const MarketPlace = () => {
         {!isCompleted ? (
           <button
             onClick={loadMore}
-            className="inline-block  mb-10 outline-none focus:outline-none align-middle transition-all duration-150 ease-in-out uppercase border border-solid font-bold last:mr-0 mr-2  text-white bg-emerald-500 border-emerald-500 active:bg-emerald-600 active:border-emerald-600 text-sm px-6 py-2 shadow hover:shadow-lg rounded-md"
+            className="inline-block px-6 py-2 mb-10 mr-2 text-sm font-bold text-white uppercase align-middle transition-all duration-150 ease-in-out border border-solid rounded-md shadow outline-none focus:outline-none last:mr-0 bg-emerald-500 border-emerald-500 active:bg-emerald-600 active:border-emerald-600 hover:shadow-lg"
           >
             show more
           </button>

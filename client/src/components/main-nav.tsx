@@ -14,7 +14,9 @@ import { Button } from '@chakra-ui/react';
 export function MainNav({
   className,
   ...props
-}: React.HTMLAttributes<HTMLElement>) {
+}: React.HTMLAttributes<HTMLElement> & {
+  className?: string;
+}) {
   return (
     <nav
       className={cn('flex items-center  space-x-4 lg:space-x-6', className)}
@@ -85,7 +87,10 @@ export function MainNav({
 }
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
+  React.ComponentPropsWithoutRef<'a'> & {
+    className?: string;
+    title?: string;
+  }
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -107,3 +112,4 @@ const ListItem = React.forwardRef<
     </li>
   );
 });
+ListItem.displayName = 'ListItem';

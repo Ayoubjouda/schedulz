@@ -1,15 +1,23 @@
 import { useRef, useState } from 'react';
+type FaqsCardProps = {
+  faqsList: {
+    id: number;
+    a: string;
+    q: string;
+  };
+};
 
-const FaqsCard = (props) => {
-  const answerElRef = useRef();
+const FaqsCard = ({ faqsList }: FaqsCardProps) => {
+  const answerElRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState(false);
   const [answerH, setAnswerH] = useState('0px');
-  const { faqsList } = props;
 
   const handleOpenAnswer = () => {
-    const answerElH = answerElRef.current.childNodes[0].offsetHeight;
+    const answerElH = answerElRef.current?.offsetHeight;
     setState(!state);
-    setAnswerH(`${answerElH + 20}px`);
+    if (answerElH) {
+      setAnswerH(`${answerElH + 20}px`);
+    }
   };
 
   return (
@@ -18,7 +26,7 @@ const FaqsCard = (props) => {
       onClick={handleOpenAnswer}
     >
       <h4 className="flex items-center justify-between pb-5 text-lg font-medium text-gray-700 cursor-pointer">
-        {faqsList.q}
+        {faqsList?.q}
         {state ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +65,7 @@ const FaqsCard = (props) => {
         style={state ? { height: answerH } : { height: '0px' }}
       >
         <div>
-          <p className="text-gray-500">{faqsList.a}</p>
+          <p className="text-gray-500">{faqsList?.a}</p>
         </div>
       </div>
     </div>

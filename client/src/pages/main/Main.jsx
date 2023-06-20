@@ -4,6 +4,7 @@ import useCoursesStore from '../../ZustandStore/store';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/navbar';
 import api from '../../api/api';
+//! Add Error Handling
 const Main = () => {
   const [navshown, setNavshown] = useState(false);
 
@@ -29,8 +30,7 @@ const Main = () => {
           ContentType: 'multipart/form-data',
         },
       })
-      .then((res) => setUserCourses(res.data.UserCourses))
-      .catch((err) => console.log(err));
+      .then((res) => setUserCourses(res.data.UserCourses));
   }, [access_token, setUserCourses]);
 
   return (

@@ -11,9 +11,14 @@ const MyCourses = () => {
       </div>
       <div className="Courses-Section">
         {Products.length > 0 ? (
-          Products.map((product) => <ProductComponent product={product} />)
+          Products.map((product, index) => (
+            <ProductComponent
+              key={index}
+              product={product}
+            />
+          ))
         ) : (
-          <div className="text-lg text-black flex h-full w-full justify-center">
+          <div className="flex justify-center w-full h-full text-lg text-black">
             {' '}
             <i>No Courses avaible yet</i>
           </div>
