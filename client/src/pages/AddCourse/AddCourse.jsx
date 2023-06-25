@@ -272,7 +272,7 @@ const AddCourse = () => {
                   />
                   {errors.language && (
                     <p className="text-xs italic text-red-500">
-                      this field can't be empty
+                      this field can&quot;t be empty
                     </p>
                   )}
                 </div>
@@ -330,7 +330,7 @@ const AddCourse = () => {
                   />
                   {errors.description && (
                     <p className="text-xs italic text-red-500">
-                      this field can't be empty
+                      this field can&quot;t be empty
                     </p>
                   )}
                 </div>
@@ -347,7 +347,7 @@ const AddCourse = () => {
                   />
                   {errors.videoUrl && (
                     <p className="text-xs italic text-red-500">
-                      this field can't be empty
+                      this field can&quot;t be empty
                     </p>
                   )}
                 </div>

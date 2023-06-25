@@ -35,7 +35,8 @@ const Profile = () => {
     delete filtredData.profilePicture;
     delete filtredData.confirmPassword;
     formData.append('data', JSON.stringify(filtredData));
-    if (data.profilePicture.length > 0) formData.append('profilePicture', data.profilePicture[0]);
+    if (data.profilePicture.length > 0)
+      formData.append('profilePicture', data.profilePicture[0]);
 
     if (_.isEmpty(filtredData) && !formData.has('profilePicture')) return;
     profileMutation({ formdata: formData });
@@ -44,7 +45,9 @@ const Profile = () => {
   return (
     <div className="z-0 flex-1 ">
       <div className="max-w-3xl px-4 py-10 mx-auto sm:px-6 lg:py-12 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-blue-gray-900">Account</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-blue-gray-900">
+          Account
+        </h1>
 
         <form
           className="mt-6 space-y-8 divide-y divide-y-blue-gray-200"
@@ -52,14 +55,19 @@ const Profile = () => {
         >
           <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
             <div className="sm:col-span-6">
-              <h2 className="text-xl font-medium text-blue-gray-900">Profile</h2>
+              <h2 className="text-xl font-medium text-blue-gray-900">
+                Profile
+              </h2>
               <p className="mt-1 text-sm text-blue-gray-500">
-                This information will be displayed publicly so be careful what you share.
+                This information will be displayed publicly so be careful what
+                you share.
               </p>
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-blue-gray-900">First name</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                First name
+              </label>
               <Input
                 type="text"
                 id="first-name"
@@ -70,7 +78,9 @@ const Profile = () => {
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-blue-gray-900">Last name</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                Last name
+              </label>
               <Input
                 type="text"
                 style={{ backgroundColor: 'white' }}
@@ -81,7 +91,9 @@ const Profile = () => {
             </div>
 
             <div className="sm:col-span-6">
-              <label className="block text-sm font-medium text-blue-gray-900">Username</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                Username
+              </label>
               <div className="flex mt-1 rounded-md shadow-sm">
                 <span className="inline-flex items-center px-3 border border-r-0 rounded-l-md border-blue-gray-300 bg-blue-gray-50 text-blue-gray-500 sm:text-sm">
                   schedulz.com/
@@ -99,7 +111,9 @@ const Profile = () => {
             </div>
 
             <div className="sm:col-span-6">
-              <label className="block text-sm font-medium text-blue-gray-900">Photo</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                Photo
+              </label>
               <div className="flex items-center mt-1">
                 <img
                   className="inline-block object-cover w-12 h-12 rounded-full"
@@ -126,7 +140,9 @@ const Profile = () => {
 
           <div className="grid grid-cols-1 pt-8 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
             <div className="sm:col-span-6">
-              <h2 className="text-xl font-medium text-blue-gray-900">Security</h2>
+              <h2 className="text-xl font-medium text-blue-gray-900">
+                Security
+              </h2>
               <p className="mt-1 text-sm text-blue-gray-500">
                 This information is private do not share it.
               </p>
@@ -150,7 +166,9 @@ const Profile = () => {
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-blue-gray-900">New Passwond</label>
+              <label className="block text-sm font-medium text-blue-gray-900">
+                New Passwond
+              </label>
               <Input
                 type="password"
                 id="New Passwond"
@@ -159,7 +177,9 @@ const Profile = () => {
                 style={{ backgroundColor: 'white' }}
                 className="block w-full mt-1 rounded-md shadow-sm border-blue-gray-300 text-blue-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
-              {errors.newPassword && <p className="text-xs italic text-red-500">Short Password</p>}
+              {errors.newPassword && (
+                <p className="text-xs italic text-red-500">Short Password</p>
+              )}
             </div>
 
             <div className="sm:col-span-3">
@@ -175,7 +195,9 @@ const Profile = () => {
                 className="block w-full mt-1 rounded-md shadow-sm text-blue-gray-900 focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
               />
               {errors?.confirmPassword && (
-                <p className="text-xs italic text-red-500">Passwords don&quot;t match.</p>
+                <p className="text-xs italic text-red-500">
+                  Passwords don&quot;t match.
+                </p>
               )}
             </div>
           </div>
