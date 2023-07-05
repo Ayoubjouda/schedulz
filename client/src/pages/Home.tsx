@@ -231,7 +231,10 @@ const Home = () => {
           ))}
         </div>
         <div className="mx-auto my-10 w-fit ">
-          <Button className="font-semibold text-md bg-emerald-600 hover:bg-emerald-700">
+          <Button
+            className="font-semibold text-md bg-emerald-600 hover:bg-emerald-700"
+            onClick={() => navigate('marketplace')}
+          >
             Explore all Courses &rarr;
           </Button>
         </div>

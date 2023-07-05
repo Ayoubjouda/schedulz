@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Req, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Req,Put, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Request } from "express";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
@@ -43,15 +43,14 @@ export class CoursesController {
   GetAllCourses() {
     return this.coursesService.GetAllCourses();
   }
-
-  @Post("deleteCourse")
+  //! UPDATE THIS API ROUTE IN THE CLIENT SIDE
+  @Delete("deleteCourse")
   DeleteCourse(@Body() data: any) {
     return this.coursesService.deleteCourse(data.id);
   }
   @UseGuards(AuthGuard("jwt"))
   @Post("buy")
   BuyCourse(@Body() data: any, @Req() req: Request) {
-    console.log(data);
     return this.coursesService.buyCourse(data.courseId, req.user);
   }
 
@@ -70,9 +69,9 @@ export class CoursesController {
   getCourseById(@Body() data: any, @Req() req: Request) {
     return this.coursesService.getCourseById(data.courseId, req.user);
   }
-
+//! UPDATE THIS API ROUTE IN THE CLIENT SIDE
   @UseGuards(AuthGuard("jwt"))
-  @Post("editcourse")
+  @Put("editcourse")
   @UseInterceptors(
     FileFieldsInterceptor(
       [

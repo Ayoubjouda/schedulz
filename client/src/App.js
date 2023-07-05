@@ -11,21 +11,77 @@ import MaketplacePreview from './pages/MaketplacePreview';
 import EditCourse from './pages/EditCourse/EditCourse';
 import ErrorPage from './pages/main/error';
 import Profile from './components/Profile/Profile';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import useCoursesStore from './ZustandStore/store';
 import './App.css';
 import Navbar from 'components/navbar/navbar';
 import { useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
+import { useGoogleOneTapLogin } from '@react-oauth/google';
+import api from 'api/api';
+import jwt_decode from 'jwt-decode';
 
 function App() {
-  const { currentUser } = useCoursesStore((state) => state);
+  const { setToken, setCurrentUser, currentUser } = useCoursesStore(
+    (state) => state
+  );
+  const navigate = useNavigate();
+
   const Toast = useToast();
+  const handleUserInfo = (token) => {
+    if (token) {
+      setToken(token);
+      const user = jwt_decode(token);
+      if (!user) throw Error('no current user');
+      setCurrentUser(user);
+      Toast({
+        title: `Welcome ${user.username}`,
+        description: 'Login Successful',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      navigate('/dashboard/marketplace');
+    }
+  };
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      api
+        .post('auth/googlesignin', {
+          access_token: credentialResponse.credential,
+        })
+        .then((res) => {
+          if (res.data?.access_token) {
+            handleUserInfo(res?.data?.access_token);
+          }
+        })
+        .catch((err) =>
+          Toast({
+            title: 'Login error.',
+            description: err.response?.data?.message
+              ? err.response?.data?.message
+              : 'Google Network Error',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
+    },
+    onError: () => {
+      Toast({
+        title: 'Login error.',
+        description: 'err',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
   useEffect(() => {
     Toast({
       description: 'This page is still under development',
     });
-  });
+  }, []);
 
   return (
     <div className="App">
@@ -55,20 +111,12 @@ function App() {
         />
         <Route
           path="marketplace"
-          element={<MaketplacePreview />}
+          element={<MarketPlace />}
         />
         <Route
           path="Dashboard"
           element={currentUser ? <Main /> : <Navigate to="/login" />}
         >
-          <Route
-            path="marketplace"
-            element={<MarketPlace />}
-          />
-          <Route
-            path="marketplace/:id"
-            element={<MarketPlace />}
-          />
           <Route
             path="mycourses"
             element={<MyCourses />}

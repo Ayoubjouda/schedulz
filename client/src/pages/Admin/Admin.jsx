@@ -76,7 +76,7 @@ const Admin = () => {
 
   return (
     <div>
-      <div className="flex w-full h-screen bg-gray-50 ">
+      <div className="flex w-full h-screen ">
         <div className="flex flex-col flex-1 ">
           <main className="h-full pb-16 ">
             <div className="container grid px-6 mx-auto ">

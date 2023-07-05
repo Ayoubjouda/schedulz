@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import { Spinner, useToast } from '@chakra-ui/react';
 
 import jwt_decode from 'jwt-decode';
@@ -31,42 +31,40 @@ const GoogleSigninButton = () => {
   };
 
   const navigate = useNavigate();
-  const uselogin = useGoogleLogin({
-    onSuccess: async (codeResponse) => {
-      api
-        .post('auth/googlesignin', {
-          access_token: codeResponse.access_token,
-        })
-        .then((res) => {
-          setLoading(false);
-          if (res.data?.access_token) {
-            handleUserInfo(res?.data?.access_token);
-          }
-        })
-        .catch((err) =>
-          toast({
-            title: 'Login error.',
-            description: err.response?.data?.message
-              ? err.response?.data?.message
-              : 'Google Network Error',
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          })
-        );
-    },
-    onError: (errorResponse) =>
-      toast({
-        title: 'Login error.',
-        description: errorResponse,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      }),
-  });
   return (
-    <button
-      onClick={() => uselogin()}
+    <GoogleLogin
+      onSuccess={(credentialResponse) => {
+        api
+          .post('auth/googlesignin', {
+            access_token: credentialResponse.credential,
+          })
+          .then((res) => {
+            setLoading(false);
+            if (res.data?.access_token) {
+              handleUserInfo(res?.data?.access_token);
+            }
+          })
+          .catch((err) =>
+            toast({
+              title: 'Login error.',
+              description: err.response?.data?.message
+                ? err.response?.data?.message
+                : 'Google Network Error',
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            })
+          );
+      }}
+      onError={() => {
+        toast({
+          title: 'Login error.',
+          description: 'err',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }}
       className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-gray-600 transition-colors duration-150 bg-white border border-gray-300 rounded-lg active:bg-blue-600 hover:bg-blue-50 focus:outline-none focus:shadow-outline-gray"
     >
       {loading ? (
@@ -100,7 +98,7 @@ const GoogleSigninButton = () => {
           Sign in With Google
         </>
       )}
-    </button>
+    </GoogleLogin>
   );
 };
 

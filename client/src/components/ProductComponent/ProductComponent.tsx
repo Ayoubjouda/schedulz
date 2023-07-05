@@ -132,35 +132,19 @@ const ProductComponent = ({ product }: ProductComponentProps) => {
 
             <div className="flex flex-row items-center mt-2">
               <div className="flex flex-col flex-auto">
-                <div
-                  className="mt-1 text-gray-400 text-xxs"
+                <p
+                  className="mt-1 text-gray-600 text-xxs"
                   title="34k Downlaods in this year"
                 >
-                  34k Downloads
-                </div>
+                  by {product.authorName}
+                </p>
               </div>
 
               {/* <div className="flex flex-row justify-end flex-auto"></div> */}
-              <div className="mr-2 font-bold text-gray-900 text-md">
+              <p className="mr-2 font-bold text-gray-900 text-md">
                 ${product.price}
-              </div>
+              </p>
             </div>
-            {access_token && !isProductPushased ? (
-              <button
-                onClick={handleCourseClick}
-                className="px-3 py-3 mt-5 font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-lg bg-emerald-600 active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
-              >
-                Buy
-              </button>
-            ) : null}
-            {/* {!access_token ? (
-              <button
-                onClick={() => navigate(`/login`)}
-                className="px-3 py-3 mt-5 font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-lg bg-emerald-600 active:bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:shadow-outline-purple"
-              >
-                Buy
-              </button>
-            ) : null} */}
             {access_token && isProductPushased ? (
               <button
                 onClick={() =>
