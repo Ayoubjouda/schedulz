@@ -1,0 +1,9 @@
+export { default as Home } from './Home';
+export { default as SignUp } from './SignUp';
+export { default as Main } from './main/Main';
+export { default as MyCourses } from './main/MyCourses';
+export { default as AddCourse } from './AddCourse';
+export { default as EditCourse } from './EditCourse';
+export { default as ErrorPage } from './main/error';
+export { default as Courses } from './main/Courses';
+export { default as Admin } from './Admin';
