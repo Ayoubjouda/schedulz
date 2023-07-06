@@ -4,7 +4,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
   return (
     <main>
-      <div className="flex items-center justify-start h-screen max-w-screen-xl px-4 mx-auto md:px-8">
+      <div className="flex items-center justify-start h-[calc(100vh-65px)] max-w-screen-xl px-4 mx-auto md:px-8">
         <div className="max-w-lg mx-auto space-y-3 text-center">
           <h3 className="text-4xl font-semibold text-gray-800 sm:text-5xl">
             Page not found

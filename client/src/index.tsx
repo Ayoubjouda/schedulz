@@ -19,7 +19,13 @@ root.render(
         withNormalizeCSS
       >
         <ChakraProvider>
-          <GoogleOAuthProvider clientId="933722326663-oheosig8bmjmhdc5npj1af7b05aknsa6.apps.googleusercontent.com">
+          <GoogleOAuthProvider
+            clientId={
+              process.env.REACT_APP_CLIENT_ID
+                ? process.env.REACT_APP_CLIENT_ID
+                : ''
+            }
+          >
             <BrowserRouter>
               <App />
             </BrowserRouter>

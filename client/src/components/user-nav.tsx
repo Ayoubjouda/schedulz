@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from 'components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
-
+import { googleLogout } from '@react-oauth/google';
 export function UserNav() {
   const { currentUser, setCurrentUser } = useCoursesStore((state) => state);
   const navigate = useNavigate();
@@ -67,7 +67,12 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setCurrentUser(null)}>
+        <DropdownMenuItem
+          onClick={() => {
+            setCurrentUser(null);
+            googleLogout();
+          }}
+        >
           <LogOut className="w-4 h-4 mr-2" />
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

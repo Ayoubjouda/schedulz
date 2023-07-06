@@ -29,10 +29,10 @@ export function MainNav({
         Schedulz
       </Link>
       <div className="items-center hidden md:flex">
-        <Link to="/examples/dashboard">
+        <Link to="/courses">
           <Button variant={'ghost'}>
             <div className="text-sm font-medium leading-none transition-colors text-muted-foreground hover:text-primary">
-              Categories
+              Courses
             </div>
           </Button>
         </Link>

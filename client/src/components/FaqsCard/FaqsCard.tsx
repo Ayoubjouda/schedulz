@@ -13,11 +13,11 @@ const FaqsCard = ({ faqsList }: FaqsCardProps) => {
   const [answerH, setAnswerH] = useState('0px');
 
   const handleOpenAnswer = () => {
-    const answerElH = answerElRef.current?.offsetHeight;
+    if (!answerElRef.current) return;
+    const answerElH = answerElRef.current.offsetHeight;
     setState(!state);
-    if (answerElH) {
-      setAnswerH(`${answerElH + 20}px`);
-    }
+
+    setAnswerH(`${answerElH + 180}px`);
   };
 
   return (
